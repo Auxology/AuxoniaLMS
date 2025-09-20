@@ -7,11 +7,15 @@ import Link from 'next/link'
 import {RiGithubFill} from "@remixicon/react";
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Loader } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
+    const router = useRouter();
     const [gitHubPending, startGitHubTransition] = useTransition();
+    const [otpPending, startOtpTransition] = useTransition();
+    const [email, setEmail] = useState("");
 
     async function LoginWithGitHub() {
         startGitHubTransition(async () => {
@@ -22,8 +26,26 @@ export default function LoginForm() {
                     onSuccess: () => {
                         toast.success("Logged in successfully, redirecting...");
                     },
-                    onError: (error) => {
-                        toast.error(`Error: ${error.error.message}`);
+                    onError: () => {
+                        toast.error("Internal server error.")
+                    }
+                }
+            })
+        })
+    }
+
+    function LoginWithOtp() {
+        startOtpTransition(async () => {
+            await authClient.emailOtp.sendVerificationOtp({
+                email: email,
+                type: "sign-in",
+                fetchOptions: {
+                    onSuccess: () => {
+                        toast.success("OTP sent to your email.");
+                        router.push(`/verify-request?email=${email}`);
+                    },
+                    onError: () => {
+                        toast.error("Error sending email.");
                     }
                 }
             })
@@ -46,6 +68,7 @@ export default function LoginForm() {
                         onClick={LoginWithGitHub}
                         className="w-full"
                         variant="outline"
+                        type="button"
                     >
                         {gitHubPending?
                             <>
@@ -78,22 +101,27 @@ export default function LoginForm() {
                             required
                             name="email"
                             id="email"
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
-                    <Button className="w-full">Continue</Button>
+                    <Button
+                        disabled={otpPending || email.length === 0}
+                        onClick={LoginWithOtp}
+                        className="w-full"
+                        type="button"
+                    >
+                        {otpPending?
+                            <>
+                                <Loader className="size-4 animate-spin" />
+                                <span>Loading...</span>
+                            </>
+                            :
+                            <span>Continue</span>
+                        }
+                    </Button>
                 </div>
             </div>
-
-            <p className="text-accent-foreground text-center text-sm">
-                Don&apos;t have an account ?
-                <Button
-                    asChild
-                    variant="link"
-                    className="px-2">
-                    <Link href="#">Create account</Link>
-                </Button>
-            </p>
         </form>
     )
 }
