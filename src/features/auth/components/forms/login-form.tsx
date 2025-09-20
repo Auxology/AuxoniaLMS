@@ -26,8 +26,8 @@ export default function LoginForm() {
                     onSuccess: () => {
                         toast.success("Logged in successfully, redirecting...");
                     },
-                    onError: () => {
-                        toast.error("Internal server error.")
+                    onError: (error) => {
+                        toast.error(`${error.error.message}`);
                     }
                 }
             })
@@ -44,8 +44,8 @@ export default function LoginForm() {
                         toast.success("OTP sent to your email.");
                         router.push(`/verify-request?email=${email}`);
                     },
-                    onError: () => {
-                        toast.error("Error sending email.");
+                    onError: (error) => {
+                        toast.error(`${error.error.message}`);
                     }
                 }
             })
