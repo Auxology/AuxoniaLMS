@@ -99,6 +99,7 @@ export const HeroHeader: React.FC = () => {
                                 </ul>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                                <ThemeTrigger />
                                 {isPending ? (
                                     <div className="h-8 w-8 animate-pulse rounded-full bg-gray-200" />
                                 ) : session ? (
@@ -121,8 +122,6 @@ export const HeroHeader: React.FC = () => {
                                         </Button>
                                     </>
                                 )}
-
-                                <ThemeTrigger />
                             </div>
                         </div>
                     </div>
