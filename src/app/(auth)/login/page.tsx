@@ -1,17 +1,17 @@
-"use server";
+'use server'
 
-import LoginForm from "@/features/auth/components/forms/login-form";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import LoginForm from '@/features/auth/components/forms/login-form'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export default async function LoginPage() {
     const session = await auth.api.getSession({
         headers: await headers(),
-    });
+    })
 
     if (session) {
-        return redirect("/");
+        return redirect('/')
     }
 
     return (
