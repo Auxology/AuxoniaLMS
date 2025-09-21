@@ -19,7 +19,7 @@ export default function HomeHeroSection() {
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                         <Link href="/login">
                             <Button size="lg" variant="default">
-                                Get started
+                                Explore Courses
                             </Button>
                         </Link>
                         <Link href="/tos">
