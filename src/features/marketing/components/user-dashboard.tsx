@@ -27,6 +27,8 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import type { LucideIcon } from 'lucide-react'
+import { getUserDisplayInfo } from '@/lib/user-display'
+import { useLogout } from '@/features/shared/hooks/use-logout'
 
 interface NavigationLink {
     name: string
@@ -60,39 +62,8 @@ const userMenuItems: UserMenuItem[] = [
 
 export default function UserDashboard({ name, email, avatarUrl }: UserDashboardProps) {
     const router = useRouter()
-    const [isLoggingOut, startLogoutTransition] = useTransition()
-
-    const handleLogout = (): void => {
-        startLogoutTransition(async () => {
-            try {
-                await authClient.signOut({
-                    fetchOptions: {
-                        onSuccess: () => {
-                            router.push('/')
-                            toast.success('Logged out successfully!')
-                        },
-                        onError: ctx => {
-                            console.error('Logout error:', ctx.error)
-                            toast.error('Error logging out. Please try again.')
-                        },
-                    },
-                })
-            } catch (error) {
-                console.error('Unexpected logout error:', error)
-                toast.error('Error logging out. Please try again.')
-            }
-        })
-    }
-
-    const getAvatarFallback = (): string => {
-        if (name) {
-            const nameParts = name.split(' ')
-            return nameParts.length > 1
-                ? `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase()
-                : name.slice(0, 2).toUpperCase()
-        }
-        return email.slice(0, 2).toUpperCase()
-    }
+    const handleLogout = useLogout()
+    const { displayName, avatarFallback } = getUserDisplayInfo({ name, email })
 
     return (
         <DropdownMenu>
@@ -103,7 +74,7 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
                             src={avatarUrl || undefined}
                             alt={`${name || email} profile image`}
                         />
-                        <AvatarFallback>{getAvatarFallback()}</AvatarFallback>
+                        <AvatarFallback>{avatarFallback}</AvatarFallback>
                     </Avatar>
                     <ChevronDownIcon size={16} className="opacity-60" aria-hidden="true" />
                 </Button>
@@ -111,7 +82,7 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
             <DropdownMenuContent className="max-w-64">
                 <DropdownMenuLabel className="flex min-w-0 flex-col">
                     <span className="text-foreground truncate text-sm font-medium">
-                        {name || email}
+                        {displayName}
                     </span>
                     {name && (
                         <span className="text-muted-foreground truncate text-xs font-normal">
@@ -153,11 +124,10 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
 
                 <DropdownMenuItem
                     onClick={handleLogout}
-                    disabled={isLoggingOut}
                     className="focus:bg-destructive focus:text-destructive-foreground"
                 >
                     <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
-                    <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+                    <span>Log out</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
