@@ -15,9 +15,9 @@ import {
     IconUsers,
 } from '@tabler/icons-react'
 
-import { NavMain } from '@/features/admin/components/admin-nav-main'
-import { NavSecondary } from '@/features/admin/components/admin-nav-secondary'
-import { NavUser } from '@/features/admin/components/admin-nav-user'
+import { NavMain } from '@/features/admin/components/sidebar/admin-nav-main'
+import { NavSecondary } from '@/features/admin/components/sidebar/admin-nav-secondary'
+import { NavUser } from '@/features/admin/components/sidebar/admin-nav-user'
 import {
     Sidebar,
     SidebarContent,

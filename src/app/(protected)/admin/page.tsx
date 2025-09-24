@@ -1,6 +1,6 @@
-import { ChartAreaInteractive } from '@/features/admin/components/admin-chart-area'
-import { DataTable } from '@/features/admin/components/admin-data-table'
-import { SectionCards } from '@/features/admin/components/admin-section-cards'
+import { ChartAreaInteractive } from '@/features/admin/components/sidebar/admin-chart-area'
+import { DataTable } from '@/features/admin/components/sidebar/admin-data-table'
+import { SectionCards } from '@/features/admin/components/sidebar/admin-section-cards'
 import data from '@/features/admin/json/data.json'
 
 export default function AdminIndexPage() {

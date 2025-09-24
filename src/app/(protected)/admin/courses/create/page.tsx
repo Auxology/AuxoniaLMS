@@ -25,6 +25,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
+import { RichTextEditor } from '@/features/admin/components/editor/editor'
 
 export default function CourseCreationPage() {
     const form = useForm<CourseSchemaType>({
@@ -115,11 +116,7 @@ export default function CourseCreationPage() {
                                                 Full Description
                                             </FormLabel>
                                             <FormControl>
-                                                <Textarea
-                                                    placeholder="Detailed course description..."
-                                                    className="min-h-[120px]"
-                                                    {...field}
-                                                />
+                                                <RichTextEditor field={field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
