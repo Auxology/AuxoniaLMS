@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas'
+import Link from 'next/link';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
 import {
     Form,
     FormControl,
@@ -14,18 +14,19 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select'
-import { Slider } from '@/components/ui/slider'
-import { RichTextEditor } from '@/features/admin/components/editor/editor'
+} from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { RichTextEditor } from '@/features/admin/components/editor/editor';
+import { Uploader } from '@/features/admin/components/file-uploader/uploader';
 
 export default function CourseCreationPage() {
     const form = useForm<CourseSchemaType>({
@@ -42,10 +43,10 @@ export default function CourseCreationPage() {
             slug: '',
             status: 'Draft',
         },
-    })
+    });
 
     function onSubmit(values: CourseSchemaType) {
-        console.log('Form submitted:', values)
+        console.log('Form submitted:', values);
     }
 
     return (
@@ -87,25 +88,46 @@ export default function CourseCreationPage() {
                                     )}
                                 />
 
-                                <FormField
-                                    control={form.control}
-                                    name="smallDescription"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-base font-semibold">
-                                                Short Description
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Textarea
-                                                    placeholder="Brief course description..."
-                                                    className="min-h-[80px]"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <FormField
+                                        control={form.control}
+                                        name="smallDescription"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-base font-semibold">
+                                                    Short Description
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="Brief course description..."
+                                                        className="min-h-[80px]"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="slug"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="text-base font-semibold">
+                                                    URL Slug
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="course-url-slug"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
 
                                 <FormField
                                     control={form.control}
@@ -285,39 +307,21 @@ export default function CourseCreationPage() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <FormField
-                                    control={form.control}
-                                    name="slug"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-base font-semibold">
-                                                URL Slug
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="course-url-slug" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-
-                                <FormField
-                                    control={form.control}
-                                    name="fileKey"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="text-base font-semibold">
-                                                File Key
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="file-storage-key" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                            <FormField
+                                control={form.control}
+                                name="fileKey"
+                                render={() => (
+                                    <FormItem>
+                                        <FormLabel className="text-base font-semibold">
+                                            File Key
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Uploader />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
                             <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t">
                                 <Button type="submit" size="default">
@@ -337,5 +341,5 @@ export default function CourseCreationPage() {
                 </CardContent>
             </Card>
         </div>
-    )
+    );
 }
