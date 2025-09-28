@@ -4,7 +4,12 @@ import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCallback } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
-import { RenderEmptyState } from './render-state';
+import {
+    RenderEmptyState,
+    RenderErrorState,
+    RenderUploadedState,
+    RenderUploadingState,
+} from './render-state';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { v7 as uuidv7 } from 'uuid';
@@ -66,25 +71,83 @@ export function Uploader() {
             }
 
             const { presignedUrl, key } = await presignedResponse.json();
-        } catch {}
-    }
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        if (acceptedFiles.length > 0) {
-            const file = acceptedFiles[0];
+            await new Promise<void>((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
 
-            setFileState({
-                file,
+                xhr.upload.onprogress = event => {
+                    if (event.lengthComputable) {
+                        const percentageComplete = (event.loaded / event.total) * 100;
+                        setFileState(prev => ({
+                            ...prev,
+                            progress: Math.round(percentageComplete),
+                        }));
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status === 200 || xhr.status === 204) {
+                        setFileState(prev => ({
+                            ...prev,
+                            uploading: false,
+                            progress: 100,
+                            error: false,
+                            key: key,
+                        }));
+
+                        toast.success('File uploaded successfully');
+
+                        resolve();
+                    } else {
+                        reject(new Error('Failed to upload file'));
+                    }
+                };
+
+                xhr.onerror = () => {
+                    reject(new Error('Failed to upload file'));
+                };
+
+                xhr.open('PUT', presignedUrl);
+                xhr.setRequestHeader('Content-Type', file.type);
+                xhr.send(file);
+            });
+        } catch {
+            toast.error('Something went wrong');
+
+            setFileState(prev => ({
+                ...prev,
                 uploading: false,
                 progress: 0,
-                objectUrl: URL.createObjectURL(file),
-                error: false,
-                id: uuidv7(),
-                isDeleted: false,
-                fileType: 'image',
-            });
+                error: true,
+            }));
         }
-    }, []);
+    }
+
+    const onDrop = useCallback(
+        (acceptedFiles: File[]) => {
+            if (acceptedFiles.length > 0) {
+                const file = acceptedFiles[0];
+
+                if (fileState.objectUrl && !fileState.objectUrl.startsWith('http')) {
+                    URL.revokeObjectURL(fileState.objectUrl);
+                }
+
+                setFileState({
+                    file,
+                    uploading: false,
+                    progress: 0,
+                    objectUrl: URL.createObjectURL(file),
+                    error: false,
+                    id: uuidv7(),
+                    isDeleted: false,
+                    fileType: 'image',
+                });
+
+                uploadFile(file);
+            }
+        },
+        [fileState.objectUrl]
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -115,6 +178,24 @@ export function Uploader() {
         }
     }
 
+    function renderContent() {
+        if (fileState.uploading) {
+            return (
+                <RenderUploadingState progress={fileState.progress} file={fileState.file as File} />
+            );
+        }
+
+        if (fileState.error) {
+            return <RenderErrorState />;
+        }
+
+        if (fileState.objectUrl) {
+            return <RenderUploadedState previewUrl={fileState.objectUrl} />;
+        }
+
+        return <RenderEmptyState isDragActive={isDragActive} />;
+    }
+
     return (
         <Card
             {...getRootProps()}
@@ -125,7 +206,7 @@ export function Uploader() {
         >
             <CardContent className="flex items-center justify-center h-full w-full p-4">
                 <input {...getInputProps()} />
-                <RenderEmptyState isDragActive={isDragActive} />
+                {renderContent()}
             </CardContent>
         </Card>
     );

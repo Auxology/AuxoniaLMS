@@ -1,6 +1,7 @@
-import { CloudUploadIcon, ImageIcon } from 'lucide-react';
+import { CloudUploadIcon, ImageIcon, TrashIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export function RenderEmptyState({ isDragActive }: { isDragActive: boolean }) {
     return (
@@ -29,7 +30,34 @@ export function RenderErrorState() {
             </div>
             <p className="text-base font-semibold">Upload Failed</p>
             <p className="text-xl mt-1 text-muted-foreground">Something went wrong</p>
-            <Button type="button" className="mt-4">Retry Again</Button>
+            <Button type="button" className="mt-4">
+                Retry Again
+            </Button>
         </div>
     );
+}
+
+export function RenderUploadedState({ previewUrl }: { previewUrl: string }) {
+    return (
+        <div>
+            <Image src={previewUrl} alt="Uploaded" fill className="object-contain p-2" />;
+            <Button type="button" variant="destructive" className={cn(
+                `absolute top-4 right-4`
+            )}>
+                <TrashIcon className="size-4 text-destructive"/>
+            </Button>
+        </div>
+    );
+}
+
+export function RenderUploadingState({progress, file} : {progress: number, file: File}) {
+    return (
+        <div className="text-center justify-center items-center flex-col">
+            <p className="mt-2 text-sm font-medium text-foreground">{progress}%</p>
+            
+            <p className="mt-2 text-sm font-medium text-foreground">Uploading ...</p>
+
+            <p className="mt-1 text-xs text-muted-foreground truncate max-w-xs">{file.name}</p>
+        </div>
+    )
 }
