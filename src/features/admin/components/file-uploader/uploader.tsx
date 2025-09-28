@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import {
     RenderEmptyState,
@@ -20,21 +20,27 @@ interface FileState {
     uploading: boolean;
     progress: number;
     key?: string;
-    isDeleted: boolean;
+    isDeleting: boolean;
     error: boolean;
     objectUrl?: string;
     fileType: 'image' | 'video';
 }
 
-export function Uploader() {
+interface iAppProps {
+    value?: string;
+    onChange?: (value: string) => void;
+}
+
+export function Uploader({ value, onChange }: iAppProps) {
     const [fileState, setFileState] = useState<FileState>({
         id: null,
         file: null,
         uploading: false,
         progress: 0,
-        isDeleted: false,
+        isDeleting: false,
         error: false,
         fileType: 'image',
+        key: value,
     });
 
     async function uploadFile(file: File) {
@@ -95,6 +101,8 @@ export function Uploader() {
                             key: key,
                         }));
 
+                        onChange?.(key);
+
                         toast.success('File uploaded successfully');
 
                         resolve();
@@ -139,7 +147,7 @@ export function Uploader() {
                     objectUrl: URL.createObjectURL(file),
                     error: false,
                     id: uuidv7(),
-                    isDeleted: false,
+                    isDeleting: false,
                     fileType: 'image',
                 });
 
@@ -156,7 +164,69 @@ export function Uploader() {
         multiple: false,
         maxSize: 5 * 1024 * 1024,
         onDropRejected: rejectedFiles,
+        disabled: fileState.isDeleting || fileState.uploading || !!fileState.objectUrl,
     });
+
+    async function handleRemoveFile() {
+        if (fileState.isDeleting) return;
+
+        try {
+            setFileState(prev => ({
+                ...prev,
+                isDeleting: true,
+            }));
+
+            const response = await fetch('/api/s3/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    key: fileState.key,
+                }),
+            });
+
+            if (!response.ok) {
+                toast.error('Failed to delete file');
+
+                setFileState(prev => ({
+                    ...prev,
+                    isDeleting: false,
+                    error: true,
+                }));
+
+                return;
+            }
+
+            if (fileState.objectUrl && !fileState.objectUrl.startsWith('http')) {
+                URL.revokeObjectURL(fileState.objectUrl);
+            }
+
+            onChange?.('');
+
+            setFileState(prev => ({
+                ...prev,
+                isDeleting: false,
+                objectUrl: undefined,
+                file: null,
+                key: undefined,
+                progress: 0,
+                error: false,
+                uploading: false,
+                fileType: 'image',
+            }));
+
+            toast.success('File deleted successfully');
+        } catch {
+            toast.error('Failed to delete file');
+
+            setFileState(prev => ({
+                ...prev,
+                isDeleting: false,
+                error: true,
+            }));
+        }
+    }
 
     function rejectedFiles(fileRejections: FileRejection[]) {
         if (fileRejections.length) {
@@ -190,11 +260,26 @@ export function Uploader() {
         }
 
         if (fileState.objectUrl) {
-            return <RenderUploadedState previewUrl={fileState.objectUrl} />;
+            return (
+                <RenderUploadedState
+                    previewUrl={fileState.objectUrl}
+                    isDeleting={fileState.isDeleting}
+                    handleRemoveFile={handleRemoveFile}
+                />
+            );
         }
 
         return <RenderEmptyState isDragActive={isDragActive} />;
     }
+
+    // Cleanup blob URL on component unmount
+    useEffect(() => {
+        return () => {
+            if (fileState.objectUrl && !fileState.objectUrl.startsWith('http')) {
+                URL.revokeObjectURL(fileState.objectUrl);
+            }
+        };
+    }, []);
 
     return (
         <Card

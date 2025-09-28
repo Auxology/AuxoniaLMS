@@ -310,13 +310,16 @@ export default function CourseCreationPage() {
                             <FormField
                                 control={form.control}
                                 name="fileKey"
-                                render={() => (
+                                render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="text-base font-semibold">
                                             File Key
                                         </FormLabel>
                                         <FormControl>
-                                            <Uploader />
+                                            <Uploader
+                                                onChange={field.onChange}
+                                                value={field.value}
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
