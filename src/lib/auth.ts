@@ -1,11 +1,10 @@
-import 'server-only';
-
 import { betterAuth } from 'better-auth';
 import { emailOTP } from 'better-auth/plugins/email-otp';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import prisma from './prisma';
 import { resend } from './resend';
 import { VerificationEmailTemplate } from '@/features/auth/components/verification-email-template';
+import { admin } from 'better-auth/plugins/admin';
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -29,5 +28,6 @@ export const auth = betterAuth({
                 });
             },
         }),
+        admin(),
     ],
 });

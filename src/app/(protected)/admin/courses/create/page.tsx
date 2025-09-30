@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import { CourseForm } from '@/features/admin/actions/create-course/course-form';
+import { CourseForm } from '@/features/admin/components/forms/course-form';
 
 export default function CourseCreationPage() {
     return (

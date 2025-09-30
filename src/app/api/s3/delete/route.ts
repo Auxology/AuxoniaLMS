@@ -1,9 +1,35 @@
 import { s3Client } from '@/lib/s3-client';
+import arcjet from '@/lib/arcjet';
+import { detectBot, fixedWindow } from '@arcjet/next';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { NextResponse } from 'next/server';
+import { RequireAdmin } from '@/features/admin/data/require-admin';
+
+const aj = arcjet
+    .withRule(
+        detectBot({
+            mode: 'LIVE',
+            allow: [],
+        })
+    )
+    .withRule(
+        fixedWindow({
+            mode: 'LIVE',
+            window: '1m',
+            max: 5,
+        })
+    );
 
 export async function DELETE(request: Request) {
+    const session = await RequireAdmin();
+
     try {
+        const decision = await aj.protect(request, { fingerprint: session.user.id });
+
+        if (decision.isDenied()) {
+            return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+        }
+
         const body = await request.json();
 
         const key = body.key;

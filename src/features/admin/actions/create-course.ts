@@ -3,16 +3,41 @@
 import prisma from '@/lib/prisma';
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
 import { CreateCourseResponse } from '../types/create-course-types';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { RequireAdmin } from '../data/require-admin';
+import arcjet from '@/lib/arcjet';
+import { detectBot, fixedWindow, request } from '@arcjet/next';
+
+const aj = arcjet
+    .withRule(
+        detectBot({
+            mode: 'LIVE',
+            allow: [],
+        })
+    )
+    .withRule(
+        fixedWindow({
+            mode: 'LIVE',
+            window: '1m',
+            max: 5,
+        })
+    );
 
 export async function CreateCourse(input: CourseSchemaType): Promise<CreateCourseResponse> {
+    const session = await RequireAdmin();
+
     try {
-        const session = await auth.api.getSession({
-            headers: await headers(),
-        });
-    
+        const req = await request();
+        const decision = await aj.protect(req, { fingerprint: session.user.id });
+
         const validation = courseSchema.safeParse(input);
+
+        if (decision.isDenied()) {
+            if (decision.reason.isRateLimit()) {
+                return { status: 'error', message: 'Too many requests' };
+            } else {
+                return { status: 'error', message: 'Malicious activity detected' };
+            }
+        }
 
         if (!validation.success) {
             return { status: 'error', message: validation.error.message };
@@ -21,7 +46,7 @@ export async function CreateCourse(input: CourseSchemaType): Promise<CreateCours
         await prisma.course.create({
             data: {
                 ...validation.data,
-                userId: session?.user.id,
+                userId: session.user.id,
             },
         });
 
