@@ -1,4 +1,4 @@
-export type CreateCourseResponse = {
+export type AdminActionResponse = {
     status: 'success' | 'error';
     message: string;
 };

@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default async function CoursesPage() {
     const data = await AdminGetCourses();
-
+    
     return (
         <>
             <div className="flex items-center justify-between">

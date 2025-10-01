@@ -31,7 +31,7 @@ export function AdminCourseCard({ data }: IAppProps) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-52">
                         <DropdownMenuItem asChild>
-                            <Link href={`/admin/courses/${data.slug}`}>
+                            <Link href={`/admin/courses/${data.id}/edit`}>
                                 <PencilIcon className="size-4 mr-2" />
                                 Edit Course
                             </Link>

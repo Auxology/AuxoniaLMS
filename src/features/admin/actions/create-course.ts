@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma';
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
-import { CreateCourseResponse } from '../types/create-course-types';
+import { CreateCourseResponse } from '../types/admin-action-response';
 import { RequireAdmin } from '../data/require-admin';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
