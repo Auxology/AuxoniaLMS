@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
     IconCreditCard,
@@ -7,9 +7,9 @@ import {
     IconHome,
     IconLogout,
     IconNotification,
-} from '@tabler/icons-react'
+} from '@tabler/icons-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -18,23 +18,23 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu';
 import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
     useSidebar,
-} from '@/components/ui/sidebar'
-import { authClient } from '@/lib/auth-client'
-import { getUserDisplayInfo } from '@/lib/user-display'
-import Link from 'next/link'
-import { Tv2 } from 'lucide-react'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useLogout } from '@/features/shared/hooks/use-logout'
+} from '@/components/ui/sidebar';
+import { authClient } from '@/lib/auth-client';
+import { getUserDisplayInfo } from '@/lib/user-display';
+import Link from 'next/link';
+import { Tv2 } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useLogout } from '@/features/shared/hooks/use-logout';
 
 export function NavUser() {
-    const { isMobile } = useSidebar()
-    const { data: session, isPending } = authClient.useSession()
+    const { isMobile } = useSidebar();
+    const { data: session, isPending } = authClient.useSession();
     const handleLogout = useLogout();
 
     if (isPending) {
@@ -46,13 +46,17 @@ export function NavUser() {
                     <Skeleton className="h-4 w-[200px]" />
                 </div>
             </div>
-        )
+        );
+    }
+
+    if (!session?.user) {
+        return null; // Don't render if no user session
     }
 
     const { displayName, avatarFallback } = getUserDisplayInfo({
-        name: session?.user.name,
-        email: session?.user.email || '',
-    })
+        name: session.user.name,
+        email: session.user.email || '',
+    });
 
     return (
         <SidebarMenu>
@@ -142,5 +146,5 @@ export function NavUser() {
                 </DropdownMenu>
             </SidebarMenuItem>
         </SidebarMenu>
-    )
+    );
 }

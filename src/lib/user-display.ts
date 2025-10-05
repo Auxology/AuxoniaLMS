@@ -3,8 +3,8 @@
  */
 
 export interface UserDisplayData {
-    name?: string | null
-    email: string
+    name?: string | null;
+    email: string;
 }
 
 /**
@@ -12,7 +12,7 @@ export interface UserDisplayData {
  * Returns name if it exists, otherwise returns email
  */
 export function getUserDisplayName(user: UserDisplayData): string {
-    return user.name || user.email
+    return user.name || user.email;
 }
 
 /**
@@ -24,19 +24,23 @@ export function getUserDisplayName(user: UserDisplayData): string {
  */
 export function getUserAvatarFallback(user: UserDisplayData): string {
     if (user.name) {
-        const nameParts = user.name.trim().split(' ').filter(Boolean)
+        const nameParts = user.name.trim().split(' ').filter(Boolean);
 
         if (nameParts.length > 1) {
             // First character of first name + first character of last name
-            return `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
+            return `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase();
         } else if (nameParts.length === 1) {
             // First character of the single name
-            return nameParts[0][0].toUpperCase()
+            return nameParts[0][0].toUpperCase();
         }
     }
 
-    // Fallback to first character of email
-    return user.email[0].toUpperCase()
+    // Fallback to first character of email, or 'U' if email is empty/undefined
+    if (user.email && user.email.length > 0) {
+        return user.email[0].toUpperCase();
+    }
+
+    return 'U'; // Default fallback for unknown user
 }
 
 /**
@@ -46,5 +50,5 @@ export function getUserDisplayInfo(user: UserDisplayData) {
     return {
         displayName: getUserDisplayName(user),
         avatarFallback: getUserAvatarFallback(user),
-    }
+    };
 }
