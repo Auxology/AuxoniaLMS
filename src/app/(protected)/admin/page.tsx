@@ -1,7 +1,7 @@
-import { ChartAreaInteractive } from '@/features/admin/components/sidebar/admin-chart-area'
-import { DataTable } from '@/features/admin/components/sidebar/admin-data-table'
-import { SectionCards } from '@/features/admin/components/sidebar/admin-section-cards'
-import data from '@/features/admin/json/data.json'
+import { ChartAreaInteractive } from '@/features/admin/components/sidebar/admin-chart-area';
+import { DataTable } from '@/features/admin/components/sidebar/admin-data-table';
+import { SectionCards } from '@/features/admin/components/sidebar/admin-section-cards';
+import data from '@/features/admin/json/data.json';
 
 export default function AdminIndexPage() {
     return (
@@ -12,5 +12,5 @@ export default function AdminIndexPage() {
             </div>
             <DataTable data={data} />
         </>
-    )
+    );
 }

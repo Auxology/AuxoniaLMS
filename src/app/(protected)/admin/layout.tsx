@@ -1,8 +1,11 @@
-import { AppSidebar } from '@/features/admin/components/sidebar/admin-sidebar'
-import { SiteHeader } from '@/features/admin/components/sidebar/admin-site-header'
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { AppSidebar } from '@/features/admin/components/sidebar/admin-sidebar';
+import { SiteHeader } from '@/features/admin/components/sidebar/admin-site-header';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { RequireAdmin } from '@/features/admin/data/require-admin';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+    // Ensure user is authenticated and has admin role
+    await RequireAdmin();
     return (
         <SidebarProvider
             style={
@@ -24,5 +27,5 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
             </SidebarInset>
         </SidebarProvider>
-    )
+    );
 }

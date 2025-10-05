@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { CourseStructure } from '@/features/admin/components/forms/course-structure';
 import { EditCourseForm } from '@/features/admin/components/forms/edit-course-form';
 import { AdminGetCourse } from '@/features/admin/data/admin-get-course';
 
@@ -33,6 +34,17 @@ export default async function EditCoursePage({ params }: { params: Params }) {
                         </CardHeader>
                         <CardContent>
                             <EditCourseForm course={data} />
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+                <TabsContent value="course-structure">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Course Structure</CardTitle>
+                            <CardDescription>Update the course structure</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <CourseStructure data={data} />
                         </CardContent>
                     </Card>
                 </TabsContent>
