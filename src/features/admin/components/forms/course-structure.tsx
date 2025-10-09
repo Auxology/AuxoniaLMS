@@ -35,6 +35,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { ReorderLesson } from '../../actions/reorder-lesson';
 import { ReorderChapter } from '../../actions/reorder-chapter';
+import { useEffect } from 'react';
 
 interface iAppProps {
     data: ExplicitAdminCourseType;
@@ -245,6 +246,23 @@ export function CourseStructure({ data }: iAppProps) {
             return;
         }
     }
+
+    useEffect(() => {
+        setItems(prevItems => {
+            const updatedItems = data.chapters.map(chapter => ({
+                id: chapter.id,
+                title: chapter.title,
+                order: chapter.position,
+                isOpen: prevItems.find(item => item.id === chapter.id)?.isOpen ?? true,
+                lessons: chapter.lessons.map(lesson => ({
+                    id: lesson.id,
+                    title: lesson.title,
+                    order: lesson.position,
+                })),
+            }));
+            return updatedItems;
+        });
+    }, [data]);
 
     return (
         <DndContext
