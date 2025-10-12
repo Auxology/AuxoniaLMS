@@ -280,7 +280,11 @@ export function EditCourseForm({ course }: EditCourseFormProps) {
                         <FormItem>
                             <FormLabel className="text-base font-semibold">File Key</FormLabel>
                             <FormControl>
-                                <Uploader onChange={field.onChange} value={field.value} />
+                                <Uploader
+                                    fileTypeAccepted="image"
+                                    onChange={field.onChange}
+                                    value={field.value}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

@@ -24,7 +24,6 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { tryCatch } from '@/hooks/try-catch';
 import { CreateLesson } from '../../actions/create-lesson';
 import { toast } from 'sonner';
@@ -46,9 +45,9 @@ export default function NewLessonModal({
             name: '',
             courseId: courseId,
             chapterId: chapterId,
-            description: '',
-            videoKey: '',
-            thumbnailKey: '',
+            description: undefined,
+            videoKey: undefined,
+            thumbnailKey: undefined,
         },
     });
 
@@ -67,14 +66,28 @@ export default function NewLessonModal({
                 toast.error(result.message);
             }
 
-            form.reset();
+            form.reset({
+                name: '',
+                courseId: courseId,
+                chapterId: chapterId,
+                description: undefined,
+                videoKey: undefined,
+                thumbnailKey: undefined,
+            });
             setIsOpen(false);
         });
     }
 
     function handleOpenChange(open: boolean) {
         if (!open) {
-            form.reset();
+            form.reset({
+                name: '',
+                courseId: courseId,
+                chapterId: chapterId,
+                description: undefined,
+                videoKey: undefined,
+                thumbnailKey: undefined,
+            });
         }
 
         setIsOpen(open);
@@ -102,49 +115,6 @@ export default function NewLessonModal({
                                     <FormLabel>Lesson Name</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Enter lesson name" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Description (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            placeholder="Enter lesson description"
-                                            className="min-h-[100px]"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="videoKey"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Video Key (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter video key" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="thumbnailKey"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Thumbnail Key (Optional)</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Enter thumbnail key" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
