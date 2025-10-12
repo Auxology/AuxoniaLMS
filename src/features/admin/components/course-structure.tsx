@@ -37,6 +37,7 @@ import { ReorderLesson } from '../actions/reorder-lesson';
 import { ReorderChapter } from '../actions/reorder-chapter';
 import { useEffect } from 'react';
 import NewChapterModal from './forms/new-chapter-modal';
+import NewLessonModal from './forms/new-lesson-modal';
 
 interface iAppProps {
     data: ExplicitAdminCourseType;
@@ -366,12 +367,10 @@ export function CourseStructure({ data }: iAppProps) {
                                                         ))}
                                                     </SortableContext>
                                                     <div className="p-2">
-                                                        <Button
-                                                            className="w-full"
-                                                            variant="outline"
-                                                        >
-                                                            Create New Lesson
-                                                        </Button>
+                                                        <NewLessonModal
+                                                            courseId={data.id}
+                                                            chapterId={item.id}
+                                                        />
                                                     </div>
                                                 </div>
                                             </CollapsibleContent>
