@@ -55,7 +55,7 @@ export function AdminCourseCard({ data }: IAppProps) {
                 </DropdownMenu>
             </div>
             <Image
-                src={url}
+                src={url ?? ''}
                 alt="Thumbnail"
                 width={600}
                 height={400}

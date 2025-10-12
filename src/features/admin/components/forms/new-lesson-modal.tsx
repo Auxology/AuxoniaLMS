@@ -29,13 +29,7 @@ import { CreateLesson } from '../../actions/create-lesson';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 
-export default function NewLessonModal({
-    courseId,
-    chapterId,
-}: {
-    courseId: string;
-    chapterId: string;
-}) {
+export function NewLessonModal({ courseId, chapterId }: { courseId: string; chapterId: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const [pending, startTransition] = useTransition();
 

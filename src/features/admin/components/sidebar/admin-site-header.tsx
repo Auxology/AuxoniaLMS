@@ -1,6 +1,6 @@
-import ThemeTrigger from '@/components/theme-trigger'
-import { Separator } from '@/components/ui/separator'
-import { SidebarTrigger } from '@/components/ui/sidebar'
+import { ThemeTrigger } from '@/components/theme-trigger';
+import { Separator } from '@/components/ui/separator';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 
 export function SiteHeader() {
     return (
@@ -17,5 +17,5 @@ export function SiteHeader() {
                 </div>
             </div>
         </header>
-    )
+    );
 }

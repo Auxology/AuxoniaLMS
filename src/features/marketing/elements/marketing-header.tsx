@@ -1,43 +1,43 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { Menu, X, HomeIcon, BookOpenIcon, Layers2Icon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import { cn } from '@/lib/utils'
-import { authClient } from '@/lib/auth-client'
-import UserDashboard from '../components/user-dashboard'
-import type { LucideIcon } from 'lucide-react'
-import ThemeTrigger from '@/components/theme-trigger'
+import Link from 'next/link';
+import { Menu, X, HomeIcon, BookOpenIcon, Layers2Icon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { authClient } from '@/lib/auth-client';
+import { UserDashboard } from '../components/user-dashboard';
+import type { LucideIcon } from 'lucide-react';
+import { ThemeTrigger } from '@/components/theme-trigger';
 
 interface NavigationItem {
-    name: string
-    href: string
-    icon?: LucideIcon
+    name: string;
+    href: string;
+    icon?: LucideIcon;
 }
 
 const menuItems: NavigationItem[] = [
     { name: 'Home', href: '/', icon: HomeIcon },
     { name: 'Courses', href: '/courses', icon: BookOpenIcon },
     { name: 'Dashboard', href: '/dashboard', icon: Layers2Icon },
-]
+];
 
 export const HeroHeader: React.FC = () => {
-    const [menuState, setMenuState] = React.useState<boolean>(false)
-    const [isScrolled, setIsScrolled] = React.useState<boolean>(false)
-    const { data: session, isPending } = authClient.useSession()
+    const [menuState, setMenuState] = React.useState<boolean>(false);
+    const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
+    const { data: session, isPending } = authClient.useSession();
 
     React.useEffect(() => {
         const handleScroll = (): void => {
-            setIsScrolled(window.scrollY > 50)
-        }
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleMenu = (): void => {
-        setMenuState(prev => !prev)
-    }
+        setMenuState(prev => !prev);
+    };
     return (
         <header>
             <nav data-state={menuState && 'active'} className="fixed z-20 w-full px-2">
@@ -128,5 +128,5 @@ export const HeroHeader: React.FC = () => {
                 </div>
             </nav>
         </header>
-    )
-}
+    );
+};

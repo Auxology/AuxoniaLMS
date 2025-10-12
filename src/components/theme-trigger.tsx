@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
-import { MoonIcon, SunIcon } from 'lucide-react'
+import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
+import { MoonIcon, SunIcon } from 'lucide-react';
 
-import { Toggle } from '@/components/ui/toggle'
+import { Toggle } from '@/components/ui/toggle';
 
-export default function ThemeTrigger() {
-    const { theme, setTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
+export function ThemeTrigger() {
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true)
-    }, [])
+        setMounted(true);
+    }, []);
 
     if (!mounted) {
         return (
@@ -31,7 +31,7 @@ export default function ThemeTrigger() {
                     />
                 </Toggle>
             </div>
-        )
+        );
     }
 
     return (
@@ -55,5 +55,5 @@ export default function ThemeTrigger() {
                 />
             </Toggle>
         </div>
-    )
+    );
 }

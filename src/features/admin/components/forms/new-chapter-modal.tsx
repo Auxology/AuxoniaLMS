@@ -29,7 +29,7 @@ import { CreateChapter } from '../../actions/create-chapter';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 
-export default function NewChapterModal({ courseId }: { courseId: string }) {
+export function NewChapterModal({ courseId }: { courseId: string }) {
     const [isOpen, setIsOpen] = useState(false);
     const [pending, startTransition] = useTransition();
 

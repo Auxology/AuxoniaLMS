@@ -30,10 +30,10 @@ import { toast } from 'sonner';
 import { ReorderLesson } from '../actions/reorder-lesson';
 import { ReorderChapter } from '../actions/reorder-chapter';
 import { useEffect } from 'react';
-import NewChapterModal from './forms/new-chapter-modal';
-import NewLessonModal from './forms/new-lesson-modal';
-import DeleteLesson from './delete-lesson';
-import DeleteChapter from './delete-chapter';
+import { NewChapterModal } from './forms/new-chapter-modal';
+import { NewLessonModal } from './forms/new-lesson-modal';
+import { DeleteLesson } from './delete-lesson';
+import { DeleteChapter } from './delete-chapter';
 
 interface iAppProps {
     data: ExplicitAdminCourseType;

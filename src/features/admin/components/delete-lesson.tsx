@@ -25,7 +25,7 @@ interface DeleteLessonProps {
     lessonId: string;
 }
 
-export default function DeleteLesson({ courseId, chapterId, lessonId }: DeleteLessonProps) {
+export function DeleteLesson({ courseId, chapterId, lessonId }: DeleteLessonProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [pending, startTransition] = useTransition();
 

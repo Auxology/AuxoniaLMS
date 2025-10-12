@@ -24,7 +24,7 @@ interface DeleteChapterProps {
     chapterId: string;
 }
 
-export default function DeleteChapter({ courseId, chapterId }: DeleteChapterProps) {
+export function DeleteChapter({ courseId, chapterId }: DeleteChapterProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [pending, startTransition] = useTransition();
 

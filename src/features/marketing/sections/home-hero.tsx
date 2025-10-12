@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import HeroBadge from '../components/display-badge'
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
+import Link from 'next/link';
+import { DisplayBadge } from '../components/display-badge';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
-export default function HomeHeroSection() {
+export function HomeHeroSection() {
     return (
         <div className="py-24 md:py-32">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <HeroBadge variant="outline" title="The Future of Learning" />
+                <DisplayBadge variant="outline" title="The Future of Learning" />
                 <div className="mx-auto max-w-2xl mt-12 text-center">
                     <h1 className="text-5xl font-semibold tracking-tight text-balance text-foreground sm:text-7xl">
                         Enjoy the modern learning experience
@@ -38,5 +38,5 @@ export default function HomeHeroSection() {
                 />
             </div>
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import AdminGetLesson from "../data/admin-get-lesson";
+import { AdminGetLesson } from '../data/admin-get-lesson';
 
 export type AdminGetLessonType = {
     id: string;

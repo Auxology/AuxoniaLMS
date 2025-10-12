@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { AdminGetLessonType } from "../types/admin-get-lesson-type";
 import { notFound } from "next/navigation";
 
-export default async function AdminGetLesson(id: string): Promise<AdminGetLessonType> {
+export async function AdminGetLesson(id: string): Promise<AdminGetLessonType> {
     await RequireAdmin();
 
     const lesson = await prisma.lesson.findUnique({

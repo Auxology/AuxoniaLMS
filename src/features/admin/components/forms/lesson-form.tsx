@@ -31,7 +31,7 @@ interface iAppProps {
     courseId: string;
 }
 
-export default function LessonForm({ data, chapterId, courseId }: iAppProps) {
+export function LessonForm({ data, chapterId, courseId }: iAppProps) {
     const [pending, startTransition] = useTransition();
 
     const form = useForm<LessonSchemaType>({
