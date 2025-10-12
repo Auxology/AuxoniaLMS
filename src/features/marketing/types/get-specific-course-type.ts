@@ -16,6 +16,7 @@ export type GetSpecificCourseType = {
         lessons: {
             id: string;
             title: string;
+            position: number;
         }[];
     }[];
 }

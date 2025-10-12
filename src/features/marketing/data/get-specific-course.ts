@@ -27,6 +27,7 @@ export async function GetSpecificCourse(slug: string): Promise<GetSpecificCourse
                         select: {
                             id: true,
                             title: true,
+                            position: true,
                         },
                         orderBy: {
                             position: 'asc',
