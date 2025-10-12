@@ -51,8 +51,7 @@ export async function CreateCourse(input: CourseSchemaType): Promise<CreateCours
         });
 
         return { status: 'success', message: 'Course created successfully' };
-    } catch (error) {
-        console.error('Create course error:', error);
+    } catch  {
         return { status: 'error', message: 'Failed to create course' };
     }
 }

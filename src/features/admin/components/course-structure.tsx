@@ -20,7 +20,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useState } from 'react';
-import { ExplicitAdminCourseType } from '../../types/admin-get-courses-type';
+import { ExplicitAdminCourseType } from '../types/admin-get-courses-type';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
@@ -33,9 +33,10 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';
-import { ReorderLesson } from '../../actions/reorder-lesson';
-import { ReorderChapter } from '../../actions/reorder-chapter';
+import { ReorderLesson } from '../actions/reorder-lesson';
+import { ReorderChapter } from '../actions/reorder-chapter';
 import { useEffect } from 'react';
+import NewChapterModal from './forms/new-chapter-modal';
 
 interface iAppProps {
     data: ExplicitAdminCourseType;
@@ -263,7 +264,6 @@ export function CourseStructure({ data }: iAppProps) {
             return updatedItems;
         });
     }, [data]);
-
     return (
         <DndContext
             collisionDetection={rectIntersection}
@@ -273,6 +273,7 @@ export function CourseStructure({ data }: iAppProps) {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between border-b border-border">
                     <CardTitle>Chapters</CardTitle>
+                    <NewChapterModal courseId={data.id} />
                 </CardHeader>
                 <CardContent>
                     <SortableContext items={items} strategy={verticalListSortingStrategy}>
@@ -281,6 +282,7 @@ export function CourseStructure({ data }: iAppProps) {
                                 id={item.id}
                                 data={{ type: 'chapter', chapterId: item.id }}
                                 key={item.id}
+                                className="mb-6"
                             >
                                 {listeners => (
                                     <Card>

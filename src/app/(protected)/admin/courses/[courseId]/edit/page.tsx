@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { CourseStructure } from '@/features/admin/components/forms/course-structure';
+import { CourseStructure } from '@/features/admin/components/course-structure';
 import { EditCourseForm } from '@/features/admin/components/forms/edit-course-form';
 import { AdminGetCourse } from '@/features/admin/data/admin-get-course';
 
