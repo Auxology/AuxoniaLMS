@@ -103,6 +103,8 @@ model Course {
   User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
 
+  @@map("courses")
+
   chapters Chapter[]
 }
 
@@ -130,6 +132,8 @@ model Chapter {
   Course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String
 
+  @@map("chapters")
+  
   lessons Lesson[]
 }
 
@@ -148,4 +152,6 @@ model Lesson {
 
   Chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   chapterId String
+
+  @@map("lessons")
 }

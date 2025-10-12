@@ -31,10 +31,12 @@ import { CreateCourse } from '@/features/admin/actions/create-course';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { useConfetti } from '@/hooks/use-confetti';
 
 export function CourseForm() {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
+    const { triggerConfetti } = useConfetti();
 
     const form = useForm<CourseSchemaType>({
         resolver: zodResolver(courseSchema),
@@ -65,6 +67,7 @@ export function CourseForm() {
                 toast.success(data.message);
                 form.reset();
                 router.push('/admin/courses');
+                triggerConfetti();
             } else if (data.status === 'error') {
                 toast.error(data.message);
             }
