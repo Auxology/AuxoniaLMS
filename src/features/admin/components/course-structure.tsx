@@ -23,13 +23,7 @@ import { useState } from 'react';
 import { ExplicitAdminCourseType } from '../types/admin-get-courses-type';
 import { cn } from '@/lib/utils';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-    ChevronDownIcon,
-    ChevronRightIcon,
-    FileTextIcon,
-    GripVerticalIcon,
-    Trash2Icon,
-} from 'lucide-react';
+import { ChevronDownIcon, ChevronRightIcon, FileTextIcon, GripVerticalIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -38,6 +32,8 @@ import { ReorderChapter } from '../actions/reorder-chapter';
 import { useEffect } from 'react';
 import NewChapterModal from './forms/new-chapter-modal';
 import NewLessonModal from './forms/new-lesson-modal';
+import DeleteLesson from './delete-lesson';
+import DeleteChapter from './delete-chapter';
 
 interface iAppProps {
     data: ExplicitAdminCourseType;
@@ -315,9 +311,10 @@ export function CourseStructure({ data }: iAppProps) {
                                                     </p>
                                                 </div>
 
-                                                <Button size="icon" variant="destructive">
-                                                    <Trash2Icon className="size-4" />
-                                                </Button>
+                                                <DeleteChapter
+                                                    courseId={data.id}
+                                                    chapterId={item.id}
+                                                />
                                             </div>
 
                                             <CollapsibleContent>
@@ -355,12 +352,11 @@ export function CourseStructure({ data }: iAppProps) {
                                                                             </Link>
                                                                         </div>
 
-                                                                        <Button
-                                                                            variant="destructive"
-                                                                            size="icon"
-                                                                        >
-                                                                            <Trash2Icon className="size-4" />
-                                                                        </Button>
+                                                                        <DeleteLesson
+                                                                            courseId={data.id}
+                                                                            chapterId={item.id}
+                                                                            lessonId={lesson.id}
+                                                                        />
                                                                     </div>
                                                                 )}
                                                             </SortableItem>
