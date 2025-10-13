@@ -15,16 +15,18 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import { CheckIcon } from 'lucide-react';
+import { CourseEnrollmentButton } from '@/features/payment/components/course-enrollment-button';
+import { checkIfUserIsEnrolled } from '@/features/payment/data/user-is-enrolled';
 import { Button } from '@/components/ui/button';
 
 export async function CourseIndividualSection({ slug }: { slug: string }) {
     const data = await GetSpecificCourse(slug);
+    const isEnrolled = await checkIfUserIsEnrolled(data.id);
 
     return (
         <div className="py-24 md:py-32">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mt-5">
-                    {/* Main Content - Course Showcase */}
                     <div className="order-1 lg:col-span-2">
                         <CourseHeroImage fileKey={data.fileKey} title={data.title} />
                         <div className="mt-8 space-y-6">
@@ -57,7 +59,6 @@ export async function CourseIndividualSection({ slug }: { slug: string }) {
                             </div>
                         </div>
 
-                        {/* Course Content Section with proper spacing */}
                         <div className="mt-16 space-y-6">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-3xl font-semibold tracking-tight">
@@ -132,7 +133,6 @@ export async function CourseIndividualSection({ slug }: { slug: string }) {
                         </div>
                     </div>
 
-                    {/* Pricing Section - Sidebar */}
                     <div className="order-2 lg:col-span-1">
                         <div className="sticky top-20">
                             <Card className="py-0">
@@ -228,7 +228,11 @@ export async function CourseIndividualSection({ slug }: { slug: string }) {
                                         </ul>
                                     </div>
 
-                                    <Button className="w-full">Enroll Now!</Button>
+                                    {isEnrolled ? (
+                                        <Button>View Course</Button>
+                                    ) : (
+                                        <CourseEnrollmentButton courseId={data.id} />
+                                    )}
                                 </CardContent>
                             </Card>
                         </div>

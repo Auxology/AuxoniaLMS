@@ -22,7 +22,7 @@ const aj = arcjet
         })
     );
 
-export async function UpdateLesson(
+export async function updateLesson(
     input: LessonSchemaType,
     lessonId: string
 ): Promise<UpdateLessonResponse> {

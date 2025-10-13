@@ -22,7 +22,7 @@ const aj = arcjet
         })
     );
 
-export async function EditCourse(data: CourseSchemaType, id: string): Promise<AdminActionResponse> {
+export async function editCourse(data: CourseSchemaType, id: string): Promise<AdminActionResponse> {
     const user = await RequireAdmin();
 
     try {

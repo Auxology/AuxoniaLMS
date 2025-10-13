@@ -27,8 +27,8 @@ import { ChevronDownIcon, ChevronRightIcon, FileTextIcon, GripVerticalIcon } fro
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { toast } from 'sonner';
-import { ReorderLesson } from '../actions/reorder-lesson';
-import { ReorderChapter } from '../actions/reorder-chapter';
+import { reorderLesson } from '../actions/reorder-lesson';
+import { reorderChapter } from '../actions/reorder-chapter';
 import { useEffect } from 'react';
 import { NewChapterModal } from './forms/new-chapter-modal';
 import { NewLessonModal } from './forms/new-lesson-modal';
@@ -156,7 +156,7 @@ export function CourseStructure({ data }: iAppProps) {
                     position: chapter.order,
                 }));
 
-                const reorderChaptersPromise = () => ReorderChapter(chaptersToUpdate, courseId);
+                const reorderChaptersPromise = () => reorderChapter(chaptersToUpdate, courseId);
 
                 toast.promise(reorderChaptersPromise(), {
                     loading: 'Reordering chapters...',
@@ -229,7 +229,7 @@ export function CourseStructure({ data }: iAppProps) {
                 }));
 
                 const reorderLessonsPromise = () =>
-                    ReorderLesson(chapterId, lessonsToUpdate, courseId);
+                    reorderLesson(chapterId, lessonsToUpdate, courseId);
 
                 toast.promise(reorderLessonsPromise(), {
                     loading: 'Reordering lessons...',

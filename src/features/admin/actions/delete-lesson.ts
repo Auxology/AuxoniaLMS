@@ -28,7 +28,7 @@ interface DeleteLessonProps {
     lessonId: string;
 }
 
-export async function DeleteLessonAction({
+export async function deleteLesson({
     courseId,
     chapterId,
     lessonId,

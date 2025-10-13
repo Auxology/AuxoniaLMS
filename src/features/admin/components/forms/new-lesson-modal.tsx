@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { tryCatch } from '@/hooks/try-catch';
-import { CreateLesson } from '../../actions/create-lesson';
+import { createLesson } from '../../actions/create-lesson';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -47,7 +47,7 @@ export function NewLessonModal({ courseId, chapterId }: { courseId: string; chap
 
     async function onSubmit(value: LessonSchemaType) {
         startTransition(async () => {
-            const { data: result, error } = await tryCatch(CreateLesson(value));
+            const { data: result, error } = await tryCatch(createLesson(value));
 
             if (error) {
                 toast.error('An unknown error occurred. Please try again.');

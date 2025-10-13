@@ -21,7 +21,7 @@ import { RichTextEditor } from '../editor/editor';
 import { Uploader } from '../file-uploader/uploader';
 import { tryCatch } from '@/hooks/try-catch';
 import { toast } from 'sonner';
-import { UpdateLesson } from '../../actions/update-lesson';
+import { updateLesson } from '../../actions/update-lesson';
 import { useTransition } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -48,7 +48,7 @@ export function LessonForm({ data, chapterId, courseId }: iAppProps) {
 
     async function onSubmit(values: LessonSchemaType) {
         startTransition(async () => {
-            const { data: result, error } = await tryCatch(UpdateLesson(values, data.id));
+            const { data: result, error } = await tryCatch(updateLesson(values, data.id));
 
             if (error) {
                 toast.error(error.message);

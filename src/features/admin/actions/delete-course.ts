@@ -22,7 +22,7 @@ const aj = arcjet
         })
     );
 
-export async function DeleteCourseAction(courseId: string): Promise<DeleteLessonResponse> {
+export async function deleteCourse(courseId: string): Promise<DeleteLessonResponse> {
     const session = await RequireAdmin();
 
     try {

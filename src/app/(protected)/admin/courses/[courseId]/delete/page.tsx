@@ -6,7 +6,7 @@ import { tryCatch } from '@/hooks/try-catch';
 import Link from 'next/link';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
-import { DeleteCourseAction } from '@/features/admin/actions/delete-course';
+import { deleteCourse } from '@/features/admin/actions/delete-course';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -18,7 +18,7 @@ export default function DeleteCoursePage() {
 
     async function onDelete() {
         startTransition(async () => {
-            const { data: result, error } = await tryCatch(DeleteCourseAction(courseId));
+            const { data: result, error } = await tryCatch(deleteCourse(courseId));
 
             if (error) {
                 toast.error('An unknown error occurred. Please try again.');

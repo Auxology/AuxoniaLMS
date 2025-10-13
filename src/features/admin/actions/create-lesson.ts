@@ -23,7 +23,7 @@ const aj = arcjet
         })
     );
 
-export async function CreateLesson(input: LessonSchemaType): Promise<CreateChapterResponse> {
+export async function createLesson(input: LessonSchemaType): Promise<CreateChapterResponse> {
     const session = await RequireAdmin();
 
     try {

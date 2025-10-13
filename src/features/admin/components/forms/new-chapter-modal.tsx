@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { tryCatch } from '@/hooks/try-catch';
-import { CreateChapter } from '../../actions/create-chapter';
+import { createChapter } from '../../actions/create-chapter';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -43,7 +43,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
 
     async function onSubmit(value: ChapterSchemaType) {
         startTransition(async () => {
-            const { data: result, error } = await tryCatch(CreateChapter(value));
+            const { data: result, error } = await tryCatch(createChapter(value));
 
             if (error) {
                 toast.error('An unknown error occurred. Please try again.');

@@ -27,7 +27,7 @@ interface DeleteChapterProps {
     chapterId: string;
 }
 
-export async function DeleteChapterAction({
+export async function deleteChapter({
     courseId,
     chapterId,
 }: DeleteChapterProps): Promise<DeleteLessonResponse> {

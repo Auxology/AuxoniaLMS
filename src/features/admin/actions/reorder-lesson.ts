@@ -22,7 +22,7 @@ const aj = arcjet
         })
     );
 
-export async function ReorderLesson(
+export async function reorderLesson(
     chapterId: string,
     lessons: { id: string; position: number }[],
     courseId: string

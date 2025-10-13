@@ -27,7 +27,7 @@ import { RichTextEditor } from '@/features/admin/components/editor/editor';
 import { Uploader } from '@/features/admin/components/file-uploader/uploader';
 import { useTransition } from 'react';
 import { tryCatch } from '@/hooks/try-catch';
-import { CreateCourse } from '@/features/admin/actions/create-course';
+import { createCourse } from '@/features/admin/actions/create-course';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
@@ -56,7 +56,7 @@ export function CourseForm() {
 
     function onSubmit(values: CourseSchemaType) {
         startTransition(async () => {
-            const { data, error } = await tryCatch(CreateCourse(values));
+            const { data, error } = await tryCatch(createCourse(values));
 
             if (error) {
                 toast.error(error.message);

@@ -16,7 +16,7 @@ import { tryCatch } from '@/hooks/try-catch';
 import { Trash2Icon } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
-import { DeleteLessonAction } from '../actions/delete-lesson';
+import { deleteLesson } from '../actions/delete-lesson';
 import { Spinner } from '@/components/ui/spinner';
 
 interface DeleteLessonProps {
@@ -32,7 +32,7 @@ export function DeleteLesson({ courseId, chapterId, lessonId }: DeleteLessonProp
     async function onDelete() {
         startTransition(async () => {
             const { data: result, error } = await tryCatch(
-                DeleteLessonAction({ courseId, chapterId, lessonId })
+                deleteLesson({ courseId, chapterId, lessonId })
             );
 
             if (error) {
