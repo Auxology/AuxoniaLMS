@@ -27,14 +27,16 @@ import { RichTextEditor } from '@/features/admin/components/editor/editor';
 import { Uploader } from '@/features/admin/components/file-uploader/uploader';
 import { useTransition } from 'react';
 import { tryCatch } from '@/hooks/try-catch';
-import { CreateCourse } from '@/features/admin/actions/create-course';
+import { createCourse } from '@/features/admin/actions/create-course';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { useConfetti } from '@/hooks/use-confetti';
 
 export function CourseForm() {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
+    const { triggerConfetti } = useConfetti();
 
     const form = useForm<CourseSchemaType>({
         resolver: zodResolver(courseSchema),
@@ -54,7 +56,7 @@ export function CourseForm() {
 
     function onSubmit(values: CourseSchemaType) {
         startTransition(async () => {
-            const { data, error } = await tryCatch(CreateCourse(values));
+            const { data, error } = await tryCatch(createCourse(values));
 
             if (error) {
                 toast.error(error.message);
@@ -65,6 +67,7 @@ export function CourseForm() {
                 toast.success(data.message);
                 form.reset();
                 router.push('/admin/courses');
+                triggerConfetti();
             } else if (data.status === 'error') {
                 toast.error(data.message);
             }
@@ -309,7 +312,11 @@ export function CourseForm() {
                                         File Key
                                     </FormLabel>
                                     <FormControl>
-                                        <Uploader onChange={field.onChange} value={field.value} />
+                                        <Uploader
+                                            onChange={field.onChange}
+                                            value={field.value}
+                                            fileTypeAccepted="image"
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

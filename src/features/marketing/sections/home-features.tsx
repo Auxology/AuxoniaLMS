@@ -1,5 +1,5 @@
-import { BookOpenIcon, GamepadIcon, ScatterChartIcon, UsersIcon } from 'lucide-react'
-import { featureProps } from '../types/feature-props'
+import { BookOpenIcon, GamepadIcon, ScatterChartIcon, UsersIcon } from 'lucide-react';
+import { featureProps } from '../types/feature-props';
 
 const features: featureProps[] = [
     {
@@ -25,9 +25,9 @@ const features: featureProps[] = [
             'Connect with a vibrant community of learners and educators for collaboration and support.',
         icon: UsersIcon,
     },
-]
+];
 
-export default function HomeFeaturesSection() {
+export function HomeFeaturesSection() {
     return (
         <div className="py-24 md:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -63,5 +63,5 @@ export default function HomeFeaturesSection() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

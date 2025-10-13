@@ -1,61 +1,58 @@
-"use client";
+'use client';
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import Link from 'next/link'
-import {RiGithubFill} from "@remixicon/react";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RiGithubFill } from '@remixicon/react';
 import { authClient } from '@/lib/auth-client';
 import { toast } from 'sonner';
 import { useState, useTransition } from 'react';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginForm() {
+export function LoginForm() {
     const router = useRouter();
     const [gitHubPending, startGitHubTransition] = useTransition();
     const [otpPending, startOtpTransition] = useTransition();
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState('');
 
     async function LoginWithGitHub() {
         startGitHubTransition(async () => {
             await authClient.signIn.social({
-                provider: "github",
-                callbackURL: "/",
+                provider: 'github',
+                callbackURL: '/',
                 fetchOptions: {
                     onSuccess: () => {
-                        toast.success("Logged in successfully, redirecting...");
+                        toast.success('Logged in successfully, redirecting...');
                     },
-                    onError: (error) => {
+                    onError: error => {
                         toast.error(`${error.error.message}`);
-                    }
-                }
-            })
-        })
+                    },
+                },
+            });
+        });
     }
 
     function LoginWithOtp() {
         startOtpTransition(async () => {
             await authClient.emailOtp.sendVerificationOtp({
                 email: email,
-                type: "sign-in",
+                type: 'sign-in',
                 fetchOptions: {
                     onSuccess: () => {
-                        toast.success("OTP sent to your email.");
+                        toast.success('OTP sent to your email.');
                         router.push(`/verify-request?email=${email}`);
                     },
-                    onError: (error) => {
+                    onError: error => {
                         toast.error(`${error.error.message}`);
-                    }
-                }
-            })
-        })
+                    },
+                },
+            });
+        });
     }
 
     return (
-        <form
-            action=""
-            className="max-w-92 m-auto h-fit w-full">
+        <form action="" className="max-w-92 m-auto h-fit w-full">
             <div className="p-6">
                 <div>
                     <h1 className="mb-1 mt-4 text-xl font-semibold">AuxoniaLMS</h1>
@@ -70,16 +67,16 @@ export default function LoginForm() {
                         variant="outline"
                         type="button"
                     >
-                        {gitHubPending?
+                        {gitHubPending ? (
                             <>
                                 <Loader className="size-4 animate-spin" />
                                 <span>Loading...</span>
                             </>
-                            :
+                        ) : (
                             <>
                                 <RiGithubFill className="mr-2 h-4 w-4" /> Continue with GitHub
                             </>
-                        }
+                        )}
                     </Button>
                 </div>
 
@@ -91,9 +88,7 @@ export default function LoginForm() {
 
                 <div className="space-y-6">
                     <div className="space-y-2">
-                        <Label
-                            htmlFor="email"
-                            className="block text-sm">
+                        <Label htmlFor="email" className="block text-sm">
                             Email
                         </Label>
                         <Input
@@ -101,7 +96,7 @@ export default function LoginForm() {
                             required
                             name="email"
                             id="email"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={e => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -111,17 +106,17 @@ export default function LoginForm() {
                         className="w-full"
                         type="button"
                     >
-                        {otpPending?
+                        {otpPending ? (
                             <>
                                 <Loader className="size-4 animate-spin" />
                                 <span>Loading...</span>
                             </>
-                            :
+                        ) : (
                             <span>Continue</span>
-                        }
+                        )}
                     </Button>
                 </div>
             </div>
         </form>
-    )
+    );
 }

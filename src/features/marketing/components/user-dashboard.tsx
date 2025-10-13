@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
     BookOpenIcon,
@@ -8,10 +8,10 @@ import {
     LogOutIcon,
     SettingsIcon,
     UserIcon,
-} from 'lucide-react'
+} from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,50 +20,45 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { useTransition } from 'react'
-import { authClient } from '@/lib/auth-client'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
-import Link from 'next/link'
-import type { LucideIcon } from 'lucide-react'
-import { getUserDisplayInfo } from '@/lib/user-display'
-import { useLogout } from '@/features/shared/hooks/use-logout'
+} from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
+import type { LucideIcon } from 'lucide-react';
+import { getUserDisplayInfo } from '@/lib/user-display';
+import { useLogout } from '@/features/shared/hooks/use-logout';
 
 interface NavigationLink {
-    name: string
-    href: string
-    icon: LucideIcon
+    name: string;
+    href: string;
+    icon: LucideIcon;
 }
 
 interface UserDashboardProps {
-    name?: string | null
-    email: string
-    avatarUrl?: string | null
+    name?: string | null;
+    email: string;
+    avatarUrl?: string | null;
 }
 
 interface UserMenuItem {
-    name: string
-    href?: string
-    icon: LucideIcon
-    onClick?: () => void
+    name: string;
+    href?: string;
+    icon: LucideIcon;
+    onClick?: () => void;
 }
 
 const navigationLinks: NavigationLink[] = [
     { name: 'Home', href: '/', icon: HomeIcon },
     { name: 'Courses', href: '/courses', icon: BookOpenIcon },
     { name: 'Dashboard', href: '/dashboard', icon: Layers2Icon },
-]
+];
 
 const userMenuItems: UserMenuItem[] = [
     { name: 'Profile', href: '/profile', icon: UserIcon },
     { name: 'Settings', href: '/settings', icon: SettingsIcon },
-]
+];
 
-export default function UserDashboard({ name, email, avatarUrl }: UserDashboardProps) {
-    const router = useRouter()
-    const handleLogout = useLogout()
-    const { displayName, avatarFallback } = getUserDisplayInfo({ name, email })
+export function UserDashboard({ name, email, avatarUrl }: UserDashboardProps) {
+    const handleLogout = useLogout();
+    const { displayName, avatarFallback } = getUserDisplayInfo({ name, email });
 
     return (
         <DropdownMenu>
@@ -94,7 +89,7 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
 
                 <DropdownMenuGroup>
                     {navigationLinks.map(link => {
-                        const Icon = link.icon
+                        const Icon = link.icon;
                         return (
                             <DropdownMenuItem key={link.href} asChild>
                                 <Link href={link.href}>
@@ -102,14 +97,14 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
                                     <span>{link.name}</span>
                                 </Link>
                             </DropdownMenuItem>
-                        )
+                        );
                     })}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
                     {userMenuItems.map(item => {
-                        const Icon = item.icon
+                        const Icon = item.icon;
                         return (
                             <DropdownMenuItem key={item.name} asChild>
                                 <Link href={item.href!}>
@@ -117,7 +112,7 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
                                     <span>{item.name}</span>
                                 </Link>
                             </DropdownMenuItem>
-                        )
+                        );
                     })}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -131,5 +126,5 @@ export default function UserDashboard({ name, email, avatarUrl }: UserDashboardP
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-    )
+    );
 }
