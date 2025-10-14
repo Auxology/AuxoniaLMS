@@ -24,13 +24,14 @@ const aj = arcjet({
                 'CATEGORY:MONITOR',
                 'CATEGORY:PREVIEW',
                 'CATEGORY:AI',
+                'STRIPE_WEBHOOK',
             ],
         }),
     ],
 });
 
 export const config = {
-    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico|api/webhook).*)'],
 };
 
 export default createMiddleware(aj, async (request: NextRequest) => {

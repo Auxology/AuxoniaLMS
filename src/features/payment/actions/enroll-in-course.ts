@@ -92,6 +92,8 @@ export async function enrollInCourse(courseId: string): Promise<PaymentResponse 
                     stripeCustomerId: customer.id,
                 },
             });
+        } else {
+            stripeCustomerId = user.stripeCustomerId;
         }
 
         if (!stripeCustomerId)
