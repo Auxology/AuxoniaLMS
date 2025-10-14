@@ -52,17 +52,13 @@ export async function createCourse(input: CourseSchemaType): Promise<CreateCours
             },
         });
 
-        console.log('Stripe product created:', stripeProduct.id);
-
         const stripePrice = await stripe.prices.create({
             unit_amount: validation.data.price * 100,
             currency: 'usd',
             product: stripeProduct.id,
         });
 
-        console.log('Stripe price created:', stripePrice.id);
-
-        const course = await prisma.course.create({
+        await prisma.course.create({
             data: {
                 ...validation.data,
                 userId: session.user.id,
@@ -71,11 +67,8 @@ export async function createCourse(input: CourseSchemaType): Promise<CreateCours
             },
         });
 
-        console.log('Course created in database:', course.id);
-
         return { status: 'success', message: 'Course created successfully' };
-    } catch (error) {
-        console.error('Course creation error:', error);
+    } catch {
         return { status: 'error', message: 'Failed to create course' };
     }
 }
