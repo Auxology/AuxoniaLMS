@@ -7,10 +7,6 @@ import { EnrolledCoursesResponse } from '../types/enrolled-courses-response';
 export async function getEnrolledCourses(): Promise<EnrolledCoursesResponse[]> {
     const session = await requireUser();
 
-    if (!session) {
-        return [];
-    }
-
     const data = await prisma.enrollment.findMany({
         where: {
             userId: session.user.id,
