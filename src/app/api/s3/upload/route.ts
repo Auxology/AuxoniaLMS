@@ -6,7 +6,7 @@ import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { NextResponse } from 'next/server';
 import { v7 as uuidv7 } from 'uuid';
-import { RequireAdmin } from '@/features/admin/data/require-admin';
+import { requireAdmin } from '@/features/admin/data/require-admin';
 
 const aj = arcjet
     .withRule(
@@ -24,7 +24,7 @@ const aj = arcjet
     );
 
 export async function POST(req: Request) {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const decision = await aj.protect(req, { fingerprint: session.user.id });

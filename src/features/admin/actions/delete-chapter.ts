@@ -1,6 +1,6 @@
 'use server';
 
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import { DeleteLessonResponse } from '../types/admin-action-response';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
 import arcjet from '@/lib/arcjet';
@@ -31,7 +31,7 @@ export async function deleteChapter({
     courseId,
     chapterId,
 }: DeleteChapterProps): Promise<DeleteLessonResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const req = await request();

@@ -1,7 +1,7 @@
 'use server';
 
 import arcjet from '@/lib/arcjet';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import { chapterSchema, ChapterSchemaType } from '../types/new-chapter-modal-schema';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
 import { CreateChapterResponse } from '../types/admin-action-response';
@@ -24,7 +24,7 @@ const aj = arcjet
     );
 
 export async function createChapter(input: ChapterSchemaType): Promise<CreateChapterResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const req = await request();

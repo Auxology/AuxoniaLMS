@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { IconCirclePlusFilled, type Icon } from '@tabler/icons-react'
+import { IconCirclePlusFilled, type Icon } from '@tabler/icons-react';
 
 import {
     SidebarGroup,
@@ -8,18 +8,25 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar'
-import Link from 'next/link'
+} from '@/components/ui/sidebar';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export function NavMain({
     items,
 }: {
     items: {
-        title: string
-        url: string
-        icon?: Icon
-    }[]
+        title: string;
+        url: string;
+        icon?: Icon;
+    }[];
 }) {
+    const router = useRouter();
+
+    function handleQuickCreate() {
+        router.push('/admin/courses/create');
+    }
+
     return (
         <SidebarGroup>
             <SidebarGroupContent className="flex flex-col gap-2">
@@ -30,7 +37,7 @@ export function NavMain({
                             className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
                         >
                             <IconCirclePlusFilled />
-                            <span>Quick Create</span>
+                            <span onClick={handleQuickCreate}>Create Course</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
@@ -48,5 +55,5 @@ export function NavMain({
                 </SidebarMenu>
             </SidebarGroupContent>
         </SidebarGroup>
-    )
+    );
 }

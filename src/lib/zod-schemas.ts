@@ -1,8 +1,8 @@
-import z from 'zod'
+import z from 'zod';
 
-const level = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'] as const
+const level = ['BEGINNER', 'INTERMEDIATE', 'ADVANCED'] as const;
 
-const courseStatus = ['Draft', 'Published', 'Archived'] as const
+const courseStatus = ['Draft', 'Published', 'Archived'] as const;
 
 const categories = [
     'Development',
@@ -11,7 +11,7 @@ const categories = [
     'Business',
     'Photography',
     'Coding',
-] as const
+] as const;
 
 export const courseSchema = z.object({
     title: z
@@ -39,6 +39,6 @@ export const courseSchema = z.object({
     slug: z.string().min(3, 'Slug must be at least 3 characters long'),
 
     status: z.enum(courseStatus, { message: 'Status must be Draft, Published, or Archived' }),
-})
+});
 
-export type CourseSchemaType = z.infer<typeof courseSchema>
+export type CourseSchemaType = z.infer<typeof courseSchema>;

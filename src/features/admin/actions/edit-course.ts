@@ -1,11 +1,12 @@
 'use server';
 
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import { AdminActionResponse } from '../types/admin-action-response';
 import prisma from '@/lib/prisma';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
+import { stripe } from '@/features/payment/lib/stripe';
 
 const aj = arcjet
     .withRule(
@@ -23,7 +24,7 @@ const aj = arcjet
     );
 
 export async function editCourse(data: CourseSchemaType, id: string): Promise<AdminActionResponse> {
-    const user = await RequireAdmin();
+    const user = await requireAdmin();
 
     try {
         const req = await request();
@@ -44,9 +45,30 @@ export async function editCourse(data: CourseSchemaType, id: string): Promise<Ad
             return { status: 'error', message: result.error.message };
         }
 
+        const currentCourse = await prisma.course.findUnique({
+            where: { id: id, userId: user.user.id },
+            select: { price: true, stripeProductId: true },
+        });
+
+        if (!currentCourse) {
+            return { status: 'error', message: 'Course not found' };
+        }
+
+        const updateData = { ...result.data, updatedAt: new Date() } as any;
+
+        if (currentCourse.price !== result.data.price) {
+            const stripePrice = await stripe.prices.create({
+                unit_amount: result.data.price * 100,
+                currency: 'usd',
+                product: currentCourse.stripeProductId,
+            });
+
+            updateData.stripePriceId = stripePrice.id;
+        }
+
         await prisma.course.update({
             where: { id: id, userId: user.user.id },
-            data: { ...result.data, updatedAt: new Date() },
+            data: updateData,
         });
 
         return { status: 'success', message: 'Course updated successfully' };

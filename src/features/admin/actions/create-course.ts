@@ -3,9 +3,10 @@
 import prisma from '@/lib/prisma';
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
 import type { CreateCourseResponse } from '../types/admin-action-response';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
+import { stripe } from '@/features/payment/lib/stripe';
 
 const aj = arcjet
     .withRule(
@@ -23,7 +24,7 @@ const aj = arcjet
     );
 
 export async function createCourse(input: CourseSchemaType): Promise<CreateCourseResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const req = await request();
@@ -43,10 +44,26 @@ export async function createCourse(input: CourseSchemaType): Promise<CreateCours
             return { status: 'error', message: validation.error.message };
         }
 
+        const stripeProduct = await stripe.products.create({
+            name: validation.data.title,
+            description: validation.data.smallDescription,
+            metadata: {
+                courseId: 'temp',
+            },
+        });
+
+        const stripePrice = await stripe.prices.create({
+            unit_amount: validation.data.price * 100,
+            currency: 'usd',
+            product: stripeProduct.id,
+        });
+
         await prisma.course.create({
             data: {
                 ...validation.data,
                 userId: session.user.id,
+                stripePriceId: stripePrice.id,
+                stripeProductId: stripeProduct.id,
             },
         });
 

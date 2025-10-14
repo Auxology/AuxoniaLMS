@@ -1,7 +1,7 @@
 'use server';
 
 import arcjet from '@/lib/arcjet';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import { lessonSchema, LessonSchemaType } from '../types/new-lesson-modal-schema';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
 import { UpdateLessonResponse } from '../types/admin-action-response';
@@ -26,7 +26,7 @@ export async function updateLesson(
     input: LessonSchemaType,
     lessonId: string
 ): Promise<UpdateLessonResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const req = await request();

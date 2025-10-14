@@ -1,12 +1,12 @@
-'use server';
+import 'server-only';
 
-import { RequireAdmin } from "./require-admin";
-import prisma from "@/lib/prisma";
-import { AdminGetLessonType } from "../types/admin-get-lesson-type";
-import { notFound } from "next/navigation";
+import { requireAdmin } from './require-admin';
+import prisma from '@/lib/prisma';
+import { AdminGetLessonType } from '../types/admin-get-lesson-type';
+import { notFound } from 'next/navigation';
 
 export async function AdminGetLesson(id: string): Promise<AdminGetLessonType> {
-    await RequireAdmin();
+    await requireAdmin();
 
     const lesson = await prisma.lesson.findUnique({
         where: { id },
@@ -19,9 +19,8 @@ export async function AdminGetLesson(id: string): Promise<AdminGetLessonType> {
             position: true,
         },
     });
-    
-    if (!lesson)
-        return notFound();
+
+    if (!lesson) return notFound();
 
     return lesson;
 }

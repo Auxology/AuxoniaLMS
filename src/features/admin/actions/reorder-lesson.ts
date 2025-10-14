@@ -5,7 +5,7 @@ import { AdminActionResponse } from '../types/admin-action-response';
 import { revalidatePath } from 'next/cache';
 import { detectBot, fixedWindow } from '@arcjet/next';
 import arcjet from '@/lib/arcjet';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 
 const aj = arcjet
     .withRule(
@@ -27,7 +27,7 @@ export async function reorderLesson(
     lessons: { id: string; position: number }[],
     courseId: string
 ): Promise<AdminActionResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         if (!lessons || lessons.length === 0)
