@@ -1,4 +1,4 @@
-import { GetAllCourses } from '../data/get-all-courses';
+import { getAllCourses } from '../data/get-all-courses';
 
 export type GetAllCoursesType = {
     id: string;
@@ -12,4 +12,4 @@ export type GetAllCoursesType = {
     category: string;
 };
 
-export type PublicCourseType = Awaited<ReturnType<typeof GetAllCourses>>[0];
+export type PublicCourseType = Awaited<ReturnType<typeof getAllCourses>>[0];

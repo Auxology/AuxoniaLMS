@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
 import { GetAllCoursesType } from '../types/get-all-courses-type';
 
-export async function GetAllCourses(): Promise<GetAllCoursesType[]> {
+export async function getAllCourses(): Promise<GetAllCoursesType[]> {
     const data = await prisma.course.findMany({
         where: {
             status: 'Published',
