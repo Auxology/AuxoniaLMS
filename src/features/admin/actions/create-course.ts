@@ -6,6 +6,7 @@ import type { CreateCourseResponse } from '../types/admin-action-response';
 import { RequireAdmin } from '../data/require-admin';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
+import { stripe } from '@/features/payment/lib/stripe';
 
 const aj = arcjet
     .withRule(
@@ -43,15 +44,38 @@ export async function createCourse(input: CourseSchemaType): Promise<CreateCours
             return { status: 'error', message: validation.error.message };
         }
 
-        await prisma.course.create({
-            data: {
-                ...validation.data,
-                userId: session.user.id,
+        const stripeProduct = await stripe.products.create({
+            name: validation.data.title,
+            description: validation.data.smallDescription,
+            metadata: {
+                courseId: 'temp',
             },
         });
 
+        console.log('Stripe product created:', stripeProduct.id);
+
+        const stripePrice = await stripe.prices.create({
+            unit_amount: validation.data.price * 100,
+            currency: 'usd',
+            product: stripeProduct.id,
+        });
+
+        console.log('Stripe price created:', stripePrice.id);
+
+        const course = await prisma.course.create({
+            data: {
+                ...validation.data,
+                userId: session.user.id,
+                stripePriceId: stripePrice.id,
+                stripeProductId: stripeProduct.id,
+            },
+        });
+
+        console.log('Course created in database:', course.id);
+
         return { status: 'success', message: 'Course created successfully' };
-    } catch {
+    } catch (error) {
+        console.error('Course creation error:', error);
         return { status: 'error', message: 'Failed to create course' };
     }
 }

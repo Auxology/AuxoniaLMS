@@ -52,10 +52,15 @@ export async function enrollInCourse(courseId: string): Promise<PaymentResponse 
                 price: true,
                 slug: true,
                 userId: true,
+                stripePriceId: true,
             },
         });
 
         if (!course) return { status: 'error', message: 'Course not found' };
+
+        if (!course.stripePriceId) {
+            return { status: 'error', message: 'Course price not configured' };
+        }
 
         let stripeCustomerId = null;
 
@@ -145,7 +150,7 @@ export async function enrollInCourse(courseId: string): Promise<PaymentResponse 
                 customer: stripeCustomerId,
                 line_items: [
                     {
-                        price: 'price_1SHj2NHkU9w7MpP3dfPIN09e',
+                        price: course.stripePriceId,
                         quantity: 1,
                     },
                 ],
