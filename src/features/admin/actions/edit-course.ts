@@ -1,7 +1,7 @@
 'use server';
 
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import { AdminActionResponse } from '../types/admin-action-response';
 import prisma from '@/lib/prisma';
 import arcjet from '@/lib/arcjet';
@@ -24,7 +24,7 @@ const aj = arcjet
     );
 
 export async function editCourse(data: CourseSchemaType, id: string): Promise<AdminActionResponse> {
-    const user = await RequireAdmin();
+    const user = await requireAdmin();
 
     try {
         const req = await request();

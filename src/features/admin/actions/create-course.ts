@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma';
 import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
 import type { CreateCourseResponse } from '../types/admin-action-response';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
 import { stripe } from '@/features/payment/lib/stripe';
@@ -24,7 +24,7 @@ const aj = arcjet
     );
 
 export async function createCourse(input: CourseSchemaType): Promise<CreateCourseResponse> {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const req = await request();

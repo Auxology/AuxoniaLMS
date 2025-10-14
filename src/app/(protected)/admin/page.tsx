@@ -1,16 +1,16 @@
 import { ChartAreaInteractive } from '@/features/admin/components/sidebar/admin-chart-area';
-import { DataTable } from '@/features/admin/components/sidebar/admin-data-table';
 import { SectionCards } from '@/features/admin/components/sidebar/admin-section-cards';
-import data from '@/features/admin/json/data.json';
+import { RecentCoursesSection } from '@/features/admin/components/recent-courses-section';
+import { adminGetChartData } from '@/features/admin/data/admin-get-chart-data';
 
-export default function AdminIndexPage() {
+export default async function AdminIndexPage() {
+    const chartData = await adminGetChartData();
+
     return (
         <>
             <SectionCards />
-            <div className="px-4 lg:px-6">
-                <ChartAreaInteractive />
-            </div>
-            <DataTable data={data} />
+            <ChartAreaInteractive data={chartData} />
+            <RecentCoursesSection />
         </>
     );
 }

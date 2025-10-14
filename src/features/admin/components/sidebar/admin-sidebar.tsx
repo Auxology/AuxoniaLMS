@@ -1,23 +1,16 @@
-'use client'
+'use client';
 
-import * as React from 'react'
+import * as React from 'react';
 import {
     IconCamera,
-    IconChartBar,
     IconDashboard,
     IconFileAi,
     IconFileDescription,
-    IconFolder,
-    IconHelp,
     IconListDetails,
-    IconSearch,
-    IconSettings,
-    IconUsers,
-} from '@tabler/icons-react'
+} from '@tabler/icons-react';
 
-import { NavMain } from '@/features/admin/components/sidebar/admin-nav-main'
-import { NavSecondary } from '@/features/admin/components/sidebar/admin-nav-secondary'
-import { NavUser } from '@/features/admin/components/sidebar/admin-nav-user'
+import { NavMain } from '@/features/admin/components/sidebar/admin-nav-main';
+import { NavUser } from '@/features/admin/components/sidebar/admin-nav-user';
 import {
     Sidebar,
     SidebarContent,
@@ -26,7 +19,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar'
+} from '@/components/ui/sidebar';
 
 const data = {
     user: {
@@ -44,21 +37,6 @@ const data = {
             title: 'Courses',
             url: '/admin/courses',
             icon: IconListDetails,
-        },
-        {
-            title: 'Analytics',
-            url: '#',
-            icon: IconChartBar,
-        },
-        {
-            title: 'Projects',
-            url: '#',
-            icon: IconFolder,
-        },
-        {
-            title: 'Team',
-            url: '#',
-            icon: IconUsers,
         },
     ],
     navClouds: [
@@ -109,24 +87,7 @@ const data = {
             ],
         },
     ],
-    navSecondary: [
-        {
-            title: 'Settings',
-            url: '#',
-            icon: IconSettings,
-        },
-        {
-            title: 'Get Help',
-            url: '#',
-            icon: IconHelp,
-        },
-        {
-            title: 'Search',
-            url: '#',
-            icon: IconSearch,
-        },
-    ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -147,11 +108,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
-    )
+    );
 }

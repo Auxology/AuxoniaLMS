@@ -3,7 +3,7 @@ import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow } from '@arcjet/next';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { NextResponse } from 'next/server';
-import { RequireAdmin } from '@/features/admin/data/require-admin';
+import { requireAdmin } from '@/features/admin/data/require-admin';
 
 const aj = arcjet
     .withRule(
@@ -21,7 +21,7 @@ const aj = arcjet
     );
 
 export async function DELETE(request: Request) {
-    const session = await RequireAdmin();
+    const session = await requireAdmin();
 
     try {
         const decision = await aj.protect(request, { fingerprint: session.user.id });

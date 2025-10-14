@@ -3,13 +3,13 @@
 import prisma from '@/lib/prisma';
 import { AdminActionResponse } from '../types/admin-action-response';
 import { revalidatePath } from 'next/cache';
-import { RequireAdmin } from '../data/require-admin';
+import { requireAdmin } from '../data/require-admin';
 
 export async function reorderChapter(
     chapters: { id: string; position: number }[],
     courseId: string
 ): Promise<AdminActionResponse> {
-    await RequireAdmin();
+    await requireAdmin();
 
     try {
         if (!chapters || chapters.length === 0)
