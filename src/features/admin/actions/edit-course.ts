@@ -1,6 +1,6 @@
 'use server';
 
-import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
+import { courseSchema, CourseSchemaType } from '../schemas/course-schemas';
 import { requireAdmin } from '../data/require-admin';
 import { AdminActionResponse } from '../types/admin-action-response';
 import prisma from '@/lib/prisma';

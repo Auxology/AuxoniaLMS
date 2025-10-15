@@ -1,4 +1,4 @@
-import { AdminGetCourse } from "../data/admin-get-course";
+import { adminGetCourse } from '../data/admin-get-course';
 
 export type AdminCourse = {
     id: string;
@@ -30,8 +30,6 @@ export type ExplicitAdminCourse = AdminCourse & {
     }[];
 };
 
-export type ExplicitAdminCourseType = Awaited<
-    ReturnType<typeof AdminGetCourse>
->;
+export type ExplicitAdminCourseType = Awaited<ReturnType<typeof adminGetCourse>>;
 
 export type AdminGetCoursesResult = AdminCourse[];

@@ -7,11 +7,11 @@ import Link from 'next/link';
 import { ArrowRightIcon, SchoolIcon, TimerIcon } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 
-interface iAppProps {
+interface PublicCourseCardProps {
     data: PublicCourseType;
 }
 
-export function PublicCourseCard({ data }: iAppProps) {
+export function PublicCourseCard({ data }: PublicCourseCardProps) {
     const url = useConstructUrl(data.fileKey);
 
     return (

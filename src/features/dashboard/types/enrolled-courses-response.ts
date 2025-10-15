@@ -1,5 +1,5 @@
 export type EnrolledCoursesResponse = {
-    Course: {
+    course: {
         id: string;
         title: string;
         smallDescription: string;

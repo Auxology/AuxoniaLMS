@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
+import { courseSchema, CourseSchemaType } from '../../schemas/course-schemas';
 import {
     Form,
     FormControl,
@@ -26,12 +26,12 @@ import { Slider } from '@/components/ui/slider';
 import { RichTextEditor } from '@/features/admin/components/editor/editor';
 import { Uploader } from '@/features/admin/components/file-uploader/uploader';
 import { useTransition } from 'react';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { createCourse } from '@/features/admin/actions/create-course';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
-import { useConfetti } from '@/hooks/use-confetti';
+import { useConfetti } from '@/features/shared/hooks/use-confetti';
 
 export function CourseForm() {
     const [isPending, startTransition] = useTransition();
@@ -54,7 +54,7 @@ export function CourseForm() {
         },
     });
 
-    function onSubmit(values: CourseSchemaType) {
+    const handleSubmit = (values: CourseSchemaType) => {
         startTransition(async () => {
             const { data, error } = await tryCatch(createCourse(values));
 
@@ -72,7 +72,7 @@ export function CourseForm() {
                 toast.error(data.message);
             }
         });
-    }
+    };
 
     return (
         <Card className="mx-auto max-w-4xl">
@@ -81,7 +81,7 @@ export function CourseForm() {
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                         <div className="space-y-6">
                             <FormField
                                 control={form.control}

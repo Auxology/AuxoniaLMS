@@ -2,7 +2,7 @@
 
 import { buttonVariants } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import Link from 'next/link';
 import { useTransition } from 'react';
 import { toast } from 'sonner';

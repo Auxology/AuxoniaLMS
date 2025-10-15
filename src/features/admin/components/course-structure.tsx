@@ -35,7 +35,7 @@ import { NewLessonModal } from './forms/new-lesson-modal';
 import { DeleteLesson } from './delete-lesson';
 import { DeleteChapter } from './delete-chapter';
 
-interface iAppProps {
+interface CourseStructureProps {
     data: ExplicitAdminCourseType;
 }
 
@@ -49,7 +49,7 @@ interface SortableItemProps {
     };
 }
 
-export function CourseStructure({ data }: iAppProps) {
+export function CourseStructure({ data }: CourseStructureProps) {
     const initialItems =
         data.chapters.map(chapter => ({
             id: chapter.id,

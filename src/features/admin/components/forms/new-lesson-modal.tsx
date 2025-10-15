@@ -24,7 +24,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { createLesson } from '../../actions/create-lesson';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
@@ -45,7 +45,7 @@ export function NewLessonModal({ courseId, chapterId }: { courseId: string; chap
         },
     });
 
-    async function onSubmit(value: LessonSchemaType) {
+    const handleSubmit = async (value: LessonSchemaType) => {
         startTransition(async () => {
             const { data: result, error } = await tryCatch(createLesson(value));
 
@@ -70,7 +70,7 @@ export function NewLessonModal({ courseId, chapterId }: { courseId: string; chap
             });
             setIsOpen(false);
         });
-    }
+    };
 
     function handleOpenChange(open: boolean) {
         if (!open) {
@@ -100,7 +100,7 @@ export function NewLessonModal({ courseId, chapterId }: { courseId: string; chap
                     <DialogDescription>Fill in the details for your new lesson.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+                    <form className="space-y-8" onSubmit={form.handleSubmit(handleSubmit)}>
                         <FormField
                             control={form.control}
                             name="name"

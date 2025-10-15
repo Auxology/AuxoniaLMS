@@ -2,10 +2,11 @@ import { stripe } from '@/features/payment/lib/stripe';
 import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
+import { env } from '@/env';
 
 export async function POST(req: Request) {
     try {
-        if (!process.env.STRIPE_WEBHOOK_SECRET) {
+        if (!env.STRIPE_WEBHOOK_SECRET) {
             return new Response('Webhook secret not configured', { status: 500 });
         }
 
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
             event = stripe.webhooks.constructEvent(
                 body,
                 signature,
-                process.env.STRIPE_WEBHOOK_SECRET!
+                env.STRIPE_WEBHOOK_SECRET
             );
         } catch {
             return new Response('Invalid signature', { status: 401 });

@@ -4,6 +4,7 @@ import { detectBot, fixedWindow } from '@arcjet/next';
 import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/features/admin/data/require-admin';
+import { env } from '@/env';
 
 const aj = arcjet
     .withRule(
@@ -37,7 +38,7 @@ export async function DELETE(request: Request) {
         if (!key) return NextResponse.json({ error: 'Key is required' }, { status: 400 });
 
         const command = new DeleteObjectCommand({
-            Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES as string,
+            Bucket: env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES,
             Key: key,
         });
 

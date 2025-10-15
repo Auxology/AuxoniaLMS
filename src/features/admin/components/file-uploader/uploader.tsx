@@ -27,13 +27,13 @@ interface FileState {
     fileType: 'image' | 'video';
 }
 
-interface iAppProps {
+interface UploaderProps {
     value?: string;
     onChange?: (value: string) => void;
     fileTypeAccepted: 'image' | 'video';
 }
 
-export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
+export function Uploader({ value, onChange, fileTypeAccepted }: UploaderProps) {
     const constructedUrl = useConstructUrl(value ?? '');
     const fileUrl = value ? constructedUrl : undefined;
 

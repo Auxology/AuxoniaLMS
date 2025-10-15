@@ -133,10 +133,10 @@ model Chapter {
   title String 
   position Int
 
-  CreatedAt DateTime @default(now())
-  UpdatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  Course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String
 
   @@map("chapters")
@@ -154,10 +154,10 @@ model Lesson {
 
   position Int
 
-  CreatedAt DateTime @default(now())
-  UpdatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  Chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   chapterId String
 
   @@map("lessons")
@@ -172,10 +172,10 @@ model Enrollment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  Course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
   courseId String
 
   @@unique([userId, courseId])

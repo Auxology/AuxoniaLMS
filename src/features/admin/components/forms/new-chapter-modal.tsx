@@ -24,7 +24,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { createChapter } from '../../actions/create-chapter';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
@@ -41,7 +41,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
         },
     });
 
-    async function onSubmit(value: ChapterSchemaType) {
+    const handleSubmit = async (value: ChapterSchemaType) => {
         startTransition(async () => {
             const { data: result, error } = await tryCatch(createChapter(value));
 
@@ -59,7 +59,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
             form.reset();
             setIsOpen(false);
         });
-    }
+    };
 
     function handleOpenChange(open: boolean) {
         if (!open) {
@@ -82,7 +82,7 @@ export function NewChapterModal({ courseId }: { courseId: string }) {
                     <DialogDescription>What will you name your new chapter?</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
-                    <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+                    <form className="space-y-8" onSubmit={form.handleSubmit(handleSubmit)}>
                         <FormField
                             control={form.control}
                             name="name"

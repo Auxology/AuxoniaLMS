@@ -1,4 +1,4 @@
-import { GetSpecificCourse } from '../data/get-specific-course';
+import { getSpecificCourse } from '../data/get-specific-course';
 import { CourseHeroImage } from '../components/course-hero-image';
 import { CourseDescription } from '../components/course-description';
 import { Badge } from '@/components/ui/badge';
@@ -20,7 +20,7 @@ import { checkIfUserIsEnrolled } from '@/features/payment/data/user-is-enrolled'
 import { Button } from '@/components/ui/button';
 
 export async function CourseIndividualSection({ slug }: { slug: string }) {
-    const data = await GetSpecificCourse(slug);
+    const data = await getSpecificCourse(slug);
     const isEnrolled = await checkIfUserIsEnrolled(data.id);
 
     return (

@@ -12,7 +12,7 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { Trash2Icon } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { toast } from 'sonner';

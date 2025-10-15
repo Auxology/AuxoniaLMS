@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { GetSpecificCourseType } from '../types/get-specific-course-type';
 
-export async function GetSpecificCourse(slug: string): Promise<GetSpecificCourseType> {
+export async function getSpecificCourse(slug: string): Promise<GetSpecificCourseType> {
     const course = await prisma.course.findUnique({
         where: {
             slug: slug,
