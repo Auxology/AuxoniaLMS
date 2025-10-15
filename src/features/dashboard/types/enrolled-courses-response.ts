@@ -7,6 +7,7 @@ export type EnrolledCoursesResponse = {
         level: string;
         slug: string;
         fileKey: string;
+        category: string;
         chapters: {
             id: string;
             lessons: {

@@ -3,6 +3,7 @@ import { EnrolledCoursesEmptyState } from '@/features/dashboard/components/enrol
 import { getNonEnrolledCourses } from '@/features/dashboard/data/get-non-enrolled-courses';
 import { AvailableCoursesEmptyState } from '@/features/dashboard/components/available-courses-empty-state';
 import { PublicCourseCard } from '@/features/marketing/components/public-course-card';
+import Link from 'next/link';
 
 export default async function DashboardPage() {
     const [courses, enrolledCourses] = await Promise.all([
@@ -22,8 +23,15 @@ export default async function DashboardPage() {
             {enrolledCourses.length === 0 ? (
                 <EnrolledCoursesEmptyState />
             ) : (
-                <div className="mt-6">
-                    <p>You have {enrolledCourses.length} enrolled course(s)</p>
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {enrolledCourses.map(enrollment => (
+                        <Link
+                            key={enrollment.course.id}
+                            href={`/dashboard/${enrollment.course.slug}`}
+                        >
+                            <span>{enrollment.course.title}</span>
+                        </Link>
+                    ))}
                 </div>
             )}
 

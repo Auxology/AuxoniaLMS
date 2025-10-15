@@ -22,6 +22,7 @@ export async function getEnrolledCourses(): Promise<EnrolledCoursesResponse[]> {
                     level: true,
                     slug: true,
                     duration: true,
+                    category: true,
                     chapters: {
                         select: {
                             id: true,
