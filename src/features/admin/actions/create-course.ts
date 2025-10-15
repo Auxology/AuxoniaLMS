@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
+import { courseSchema, CourseSchemaType } from '../schemas/course-schemas';
 import type { CreateCourseResponse } from '../types/admin-action-response';
 import { requireAdmin } from '../data/require-admin';
 import arcjet from '@/lib/arcjet';

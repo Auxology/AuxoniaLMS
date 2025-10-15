@@ -1,4 +1,4 @@
-import { GetSpecificCourse } from "../data/get-specific-course";
+import { getSpecificCourse } from '../data/get-specific-course';
 
 export type GetSpecificCourseType = {
     id: string;
@@ -19,6 +19,6 @@ export type GetSpecificCourseType = {
             position: number;
         }[];
     }[];
-}
+};
 
-export type PublicSpecificCourseType = Awaited<ReturnType<typeof GetSpecificCourse>>;
+export type PublicSpecificCourseType = Awaited<ReturnType<typeof getSpecificCourse>>;

@@ -4,14 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { CourseStructure } from '@/features/admin/components/course-structure';
 import { EditCourseForm } from '@/features/admin/components/forms/edit-course-form';
-import { AdminGetCourse } from '@/features/admin/data/admin-get-course';
+import { adminGetCourse } from '@/features/admin/data/admin-get-course';
 
 type Params = Promise<{ courseId: string }>;
 
 export default async function EditCoursePage({ params }: { params: Params }) {
     const { courseId } = await params;
 
-    const data = await AdminGetCourse(courseId);
+    const data = await adminGetCourse(courseId);
 
     return (
         <div>

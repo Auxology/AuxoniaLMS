@@ -26,7 +26,7 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 import { authClient } from '@/lib/auth-client';
-import { getUserDisplayInfo } from '@/lib/user-display';
+import { getUserDisplayInfo } from '@/features/shared/utils/user-display';
 import Link from 'next/link';
 import { Tv2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';

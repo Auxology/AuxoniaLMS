@@ -1,7 +1,7 @@
 import { BookOpenIcon, GamepadIcon, ScatterChartIcon, UsersIcon } from 'lucide-react';
-import { featureProps } from '../types/feature-props';
+import { FeatureProps } from '../types/feature-props';
 
-const features: featureProps[] = [
+const features: FeatureProps[] = [
     {
         name: 'Comprehensive Courses',
         description:

@@ -3,7 +3,7 @@
 import { AdminCourseCard } from '@/features/admin/components/admin-course-card';
 import { CourseCardSkeleton } from '@/features/admin/components/course-card-skeleton';
 import { CoursesEmptyState } from '@/features/admin/components/courses-empty-state';
-import { AdminGetCourses } from '@/features/admin/data/admin-get-courses';
+import { adminGetCourses } from '@/features/admin/data/admin-get-courses';
 import { Suspense } from 'react';
 
 export default async function CoursesPage() {
@@ -29,7 +29,7 @@ function CourseSkeletonGrid() {
 }
 
 async function RenderCourses() {
-    const data = await AdminGetCourses();
+    const data = await adminGetCourses();
 
     if (data.length === 0) {
         return <CoursesEmptyState />;

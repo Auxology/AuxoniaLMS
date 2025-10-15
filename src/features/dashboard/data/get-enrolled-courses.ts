@@ -13,7 +13,7 @@ export async function getEnrolledCourses(): Promise<EnrolledCoursesResponse[]> {
             status: 'Active',
         },
         select: {
-            Course: {
+            course: {
                 select: {
                     id: true,
                     smallDescription: true,

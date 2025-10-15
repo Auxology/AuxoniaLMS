@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import type { LucideIcon } from 'lucide-react';
-import { getUserDisplayInfo } from '@/lib/user-display';
+import { getUserDisplayInfo } from '@/features/shared/utils/user-display';
 import { useLogout } from '@/features/shared/hooks/use-logout';
 
 interface NavigationLink {

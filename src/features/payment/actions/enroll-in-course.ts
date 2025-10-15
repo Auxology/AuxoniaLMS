@@ -8,6 +8,7 @@ import Stripe from 'stripe';
 import { redirect } from 'next/navigation';
 import arcjet from '@/lib/arcjet';
 import { detectBot, fixedWindow, request } from '@arcjet/next';
+import { env } from '@/env';
 
 const aj = arcjet
     .withRule(
@@ -155,8 +156,8 @@ export async function enrollInCourse(courseId: string): Promise<PaymentResponse 
                     },
                 ],
                 mode: 'payment',
-                cancel_url: `${process.env.BETTER_AUTH_URL}/payment/cancel`,
-                success_url: `${process.env.BETTER_AUTH_URL}/payment/success`,
+                cancel_url: `${env.BETTER_AUTH_URL}/payment/cancel`,
+                success_url: `${env.BETTER_AUTH_URL}/payment/success`,
                 metadata: {
                     userId: user.id,
                     courseId: courseId,

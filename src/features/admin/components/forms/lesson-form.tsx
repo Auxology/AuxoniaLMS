@@ -19,19 +19,19 @@ import { lessonSchema, LessonSchemaType } from '../../types/new-lesson-modal-sch
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RichTextEditor } from '../editor/editor';
 import { Uploader } from '../file-uploader/uploader';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { toast } from 'sonner';
 import { updateLesson } from '../../actions/update-lesson';
 import { useTransition } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
-interface iAppProps {
+interface LessonFormProps {
     data: AdminLessonType;
     chapterId: string;
     courseId: string;
 }
 
-export function LessonForm({ data, chapterId, courseId }: iAppProps) {
+export function LessonForm({ data, chapterId, courseId }: LessonFormProps) {
     const [pending, startTransition] = useTransition();
 
     const form = useForm<LessonSchemaType>({
@@ -46,7 +46,7 @@ export function LessonForm({ data, chapterId, courseId }: iAppProps) {
         resolver: zodResolver(lessonSchema),
     });
 
-    async function onSubmit(values: LessonSchemaType) {
+    const handleSubmit = async (values: LessonSchemaType) => {
         startTransition(async () => {
             const { data: result, error } = await tryCatch(updateLesson(values, data.id));
 
@@ -61,7 +61,7 @@ export function LessonForm({ data, chapterId, courseId }: iAppProps) {
                 toast.error(result.message);
             }
         });
-    }
+    };
 
     return (
         <div>
@@ -82,7 +82,7 @@ export function LessonForm({ data, chapterId, courseId }: iAppProps) {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                             <FormField
                                 control={form.control}
                                 name="name"

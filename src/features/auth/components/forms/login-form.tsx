@@ -16,7 +16,7 @@ export function LoginForm() {
     const [otpPending, startOtpTransition] = useTransition();
     const [email, setEmail] = useState('');
 
-    async function LoginWithGitHub() {
+    const handleLoginWithGitHub = async () => {
         startGitHubTransition(async () => {
             await authClient.signIn.social({
                 provider: 'github',
@@ -31,9 +31,9 @@ export function LoginForm() {
                 },
             });
         });
-    }
+    };
 
-    function LoginWithOtp() {
+    const handleLoginWithOtp = () => {
         startOtpTransition(async () => {
             await authClient.emailOtp.sendVerificationOtp({
                 email: email,
@@ -49,7 +49,7 @@ export function LoginForm() {
                 },
             });
         });
-    }
+    };
 
     return (
         <form action="" className="max-w-92 m-auto h-fit w-full">
@@ -62,7 +62,7 @@ export function LoginForm() {
                 <div className="mt-6">
                     <Button
                         disabled={gitHubPending}
-                        onClick={LoginWithGitHub}
+                        onClick={handleLoginWithGitHub}
                         className="w-full"
                         variant="outline"
                         type="button"
@@ -102,7 +102,7 @@ export function LoginForm() {
 
                     <Button
                         disabled={otpPending || email.length === 0}
-                        onClick={LoginWithOtp}
+                        onClick={handleLoginWithOtp}
                         className="w-full"
                         type="button"
                     >

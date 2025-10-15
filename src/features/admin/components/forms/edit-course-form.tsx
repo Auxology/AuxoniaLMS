@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { courseSchema, CourseSchemaType } from '@/lib/zod-schemas';
+import { courseSchema, CourseSchemaType } from '../../schemas/course-schemas';
 import {
     Form,
     FormControl,
@@ -25,7 +25,7 @@ import { Slider } from '@/components/ui/slider';
 import { RichTextEditor } from '@/features/admin/components/editor/editor';
 import { Uploader } from '@/features/admin/components/file-uploader/uploader';
 import { useTransition } from 'react';
-import { tryCatch } from '@/hooks/try-catch';
+import { tryCatch } from '@/features/shared/hooks/try-catch';
 import { editCourse } from '@/features/admin/actions/edit-course';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -57,7 +57,7 @@ export function EditCourseForm({ course }: EditCourseFormProps) {
         },
     });
 
-    function onSubmit(values: CourseSchemaType) {
+    const handleSubmit = (values: CourseSchemaType) => {
         startTransition(async () => {
             const { data, error } = await tryCatch(editCourse(values, course.id));
 
@@ -73,11 +73,11 @@ export function EditCourseForm({ course }: EditCourseFormProps) {
                 toast.error(data.message);
             }
         });
-    }
+    };
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
                 <div className="space-y-6">
                     <FormField
                         control={form.control}

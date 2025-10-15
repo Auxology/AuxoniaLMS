@@ -5,6 +5,7 @@ import prisma from './prisma';
 import { resend } from './resend';
 import { VerificationEmailTemplate } from '@/features/auth/components/verification-email-template';
 import { admin } from 'better-auth/plugins/admin';
+import { env } from '@/env';
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -12,8 +13,8 @@ export const auth = betterAuth({
     }),
     socialProviders: {
         github: {
-            clientId: process.env.AUTH_GITHUB_CLIENT_ID as string,
-            clientSecret: process.env.AUTH_GITHUB_CLIENT_SECRET as string,
+            clientId: env.AUTH_GITHUB_CLIENT_ID,
+            clientSecret: env.AUTH_GITHUB_CLIENT_SECRET,
         },
     },
 

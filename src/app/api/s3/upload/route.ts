@@ -7,6 +7,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { NextResponse } from 'next/server';
 import { v7 as uuidv7 } from 'uuid';
 import { requireAdmin } from '@/features/admin/data/require-admin';
+import { env } from '@/env';
 
 const aj = arcjet
     .withRule(
@@ -42,7 +43,7 @@ export async function POST(req: Request) {
         }
 
         const { fileName, contentType, size } = validation.data;
-        const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES as string;
+        const bucketName = env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES;
 
         const unique = `${uuidv7()}-${fileName}`;
 

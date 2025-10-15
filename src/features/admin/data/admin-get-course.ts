@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 import { ExplicitAdminCourse } from '../types/admin-get-courses-type';
 import { notFound } from 'next/navigation';
 
-export async function AdminGetCourse(id: string): Promise<ExplicitAdminCourse> {
+export async function adminGetCourse(id: string): Promise<ExplicitAdminCourse> {
     await requireAdmin();
 
     const data = await prisma.course.findUnique({
