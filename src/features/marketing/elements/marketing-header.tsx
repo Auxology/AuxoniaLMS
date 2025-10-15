@@ -1,7 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X, HomeIcon, BookOpenIcon, Layers2Icon } from 'lucide-react';
+import {
+    Menu,
+    X,
+    HomeIcon,
+    BookOpenIcon,
+    Layers2Icon,
+    SettingsIcon,
+    UsersIcon,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -16,16 +24,31 @@ interface NavigationItem {
     icon?: LucideIcon;
 }
 
-const menuItems: NavigationItem[] = [
-    { name: 'Home', href: '/', icon: HomeIcon },
-    { name: 'Courses', href: '/courses', icon: BookOpenIcon },
-    { name: 'Dashboard', href: '/dashboard', icon: Layers2Icon },
-];
+const getMenuItems = (isAdmin: boolean): NavigationItem[] => {
+    const baseItems: NavigationItem[] = [
+        { name: 'Home', href: '/', icon: HomeIcon },
+        { name: 'Courses', href: '/courses', icon: BookOpenIcon },
+        { name: 'Dashboard', href: '/dashboard', icon: Layers2Icon },
+    ];
+
+    if (isAdmin) {
+        return [
+            ...baseItems,
+            { name: 'Admin Dashboard', href: '/admin', icon: SettingsIcon },
+            { name: 'Manage Courses', href: '/admin/courses', icon: UsersIcon },
+        ];
+    }
+
+    return baseItems;
+};
 
 export const HeroHeader: React.FC = () => {
     const [menuState, setMenuState] = React.useState<boolean>(false);
     const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
     const { data: session, isPending } = authClient.useSession();
+
+    const isAdmin = session?.user?.role === 'admin';
+    const menuItems = getMenuItems(isAdmin);
 
     React.useEffect(() => {
         const handleScroll = (): void => {
