@@ -21,11 +21,7 @@ export async function POST(req: Request) {
         let event: Stripe.Event;
 
         try {
-            event = stripe.webhooks.constructEvent(
-                body,
-                signature,
-                env.STRIPE_WEBHOOK_SECRET
-            );
+            event = stripe.webhooks.constructEvent(body, signature, env.STRIPE_WEBHOOK_SECRET);
         } catch {
             return new Response('Invalid signature', { status: 401 });
         }
@@ -52,6 +48,10 @@ export async function POST(req: Request) {
                     return new Response('No enrollment id', { status: 400 });
                 }
 
+                if (session.payment_status !== 'paid') {
+                    return new Response('Payment not completed', { status: 400 });
+                }
+
                 try {
                     const user = await prisma.user.findUnique({
                         where: {
@@ -61,6 +61,26 @@ export async function POST(req: Request) {
 
                     if (!user) {
                         return new Response('User not found', { status: 404 });
+                    }
+
+                    const existingEnrollment = await prisma.enrollment.findUnique({
+                        where: {
+                            id: enrollmentId,
+                        },
+                        select: {
+                            id: true,
+                            status: true,
+                            userId: true,
+                            courseId: true,
+                        },
+                    });
+
+                    if (!existingEnrollment) {
+                        return new Response('Enrollment not found', { status: 404 });
+                    }
+
+                    if (existingEnrollment.status !== 'Pending') {
+                        return new Response('Enrollment not in pending status', { status: 400 });
                     }
 
                     await prisma.enrollment.update({

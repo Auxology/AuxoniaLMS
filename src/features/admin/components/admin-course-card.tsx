@@ -38,7 +38,7 @@ export function AdminCourseCard({ data }: IAppProps) {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                            <Link href={`/admin/courses/${data.slug}`}>
+                            <Link href={`/courses/${data.slug}`}>
                                 <EyeIcon className="size-4 mr-2" />
                                 Preview
                             </Link>

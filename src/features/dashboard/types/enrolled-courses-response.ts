@@ -18,7 +18,7 @@ export type EnrolledCoursesResponse = {
                     id: string;
                     completed: boolean;
                     lessonId: string;
-                }[];
+                }[] | null;
             }[];
         }[];
     };

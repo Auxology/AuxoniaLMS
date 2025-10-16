@@ -3,31 +3,14 @@
 import prisma from '@/lib/prisma';
 import { AdminActionResponse } from '../types/admin-action-response';
 import { revalidatePath } from 'next/cache';
-import { detectBot, fixedWindow } from '@arcjet/next';
-import arcjet from '@/lib/arcjet';
 import { requireAdmin } from '../data/require-admin';
-
-const aj = arcjet
-    .withRule(
-        detectBot({
-            mode: 'LIVE',
-            allow: [],
-        })
-    )
-    .withRule(
-        fixedWindow({
-            mode: 'LIVE',
-            window: '1m',
-            max: 5,
-        })
-    );
 
 export async function reorderLesson(
     chapterId: string,
     lessons: { id: string; position: number }[],
     courseId: string
 ): Promise<AdminActionResponse> {
-    const session = await requireAdmin();
+    await requireAdmin();
 
     try {
         if (!lessons || lessons.length === 0)

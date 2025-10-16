@@ -31,7 +31,6 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import { ExplicitAdminCourseType } from '@/features/admin/types/admin-get-courses-type';
-import { useConstructUrl } from '@/features/shared/hooks/use-construct';
 
 interface EditCourseFormProps {
     course: ExplicitAdminCourseType;
