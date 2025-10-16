@@ -54,7 +54,10 @@ export async function editCourse(data: CourseSchemaType, id: string): Promise<Ad
             return { status: 'error', message: 'Course not found' };
         }
 
-        const updateData = { ...result.data, updatedAt: new Date() } as any;
+        const updateData: CourseSchemaType & { updatedAt: Date; stripePriceId?: string } = {
+            ...result.data,
+            updatedAt: new Date(),
+        };
 
         if (currentCourse.price !== result.data.price) {
             const stripePrice = await stripe.prices.create({

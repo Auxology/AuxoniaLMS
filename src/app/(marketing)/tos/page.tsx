@@ -67,7 +67,7 @@ export default function TermsOfServicePage() {
                             <li>May be unavailable at any time without notice</li>
                             <li>Does not provide customer support or service level agreements</li>
                             <li>May contain bugs, incomplete features, or experimental functionality</li>
-                            <li>Is provided "as-is" for learning purposes only</li>
+                            <li>Is provided &quot;as-is&quot; for learning purposes only</li>
                         </ul>
                     </section>
 

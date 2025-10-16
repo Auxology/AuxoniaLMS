@@ -118,7 +118,7 @@ export async function CourseIndividualSection({ slug }: { slug: string }) {
                                                                         {lesson.title}
                                                                     </p>
                                                                     <p className="text-xs text-muted-foreground mt-1">
-                                                                        Lesson {lesson.position + 1}
+                                                                        Lesson {lesson.position}
                                                                     </p>
                                                                 </div>
                                                             </div>

@@ -1,13 +1,6 @@
 'use client';
 
-import {
-    IconCreditCard,
-    IconDashboard,
-    IconDotsVertical,
-    IconHome,
-    IconLogout,
-    IconNotification,
-} from '@tabler/icons-react';
+import { IconDashboard, IconDotsVertical, IconHome, IconLogout } from '@tabler/icons-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {

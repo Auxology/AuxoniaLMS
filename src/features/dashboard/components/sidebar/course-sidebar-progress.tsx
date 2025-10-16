@@ -1,3 +1,5 @@
+'use client';
+
 import { PlayIcon } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 import { useCourseProgress } from '../../hooks/use-course-progress';

@@ -3,7 +3,6 @@ import { EnrolledCoursesEmptyState } from '@/features/dashboard/components/enrol
 import { getNonEnrolledCourses } from '@/features/dashboard/data/get-non-enrolled-courses';
 import { AvailableCoursesEmptyState } from '@/features/dashboard/components/available-courses-empty-state';
 import { PublicCourseCard } from '@/features/marketing/components/public-course-card';
-import Link from 'next/link';
 import { CourseProgressCard } from '@/features/dashboard/components/course-progress-card';
 
 export default async function DashboardPage() {
@@ -26,10 +25,7 @@ export default async function DashboardPage() {
             ) : (
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                     {enrolledCourses.map(enrollment => (
-                        <CourseProgressCard
-                            key={enrollment.course.id}
-                            data={enrollment}
-                        />
+                        <CourseProgressCard key={enrollment.course.id} data={enrollment} />
                     ))}
                 </div>
             )}
