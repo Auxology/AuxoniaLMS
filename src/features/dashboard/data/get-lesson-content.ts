@@ -8,7 +8,7 @@ import { LessonContentData } from '../types/lesson-content-response';
 export async function getLessonContent(lessonId: string): Promise<LessonContentData> {
     const session = await requireUser();
 
-    const lesson = await prisma.lesson.findUnique({
+    const lesson = await prisma.lesson.findFirst({
         where: {
             id: lessonId,
         },
@@ -19,12 +19,26 @@ export async function getLessonContent(lessonId: string): Promise<LessonContentD
             thumbnailKey: true,
             videoKey: true,
             position: true,
+            lessonProgresses: {
+                where: {
+                    userId: session.user.id,
+                },
+                select: {
+                    id: true,
+                    completed: true,
+                }
+            },
             chapter: {
                 select: {
                     courseId: true,
+                    course: {
+                        select: {
+                            slug: true,
+                        },
+                    },
                 },
             },
-        },
+       },
     });
 
     if (!lesson) {

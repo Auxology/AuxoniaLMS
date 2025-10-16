@@ -14,12 +14,12 @@ interface CourseSidebarLessonItemProps {
         description: string | null;
     };
     slug: string;
+    completed: boolean;
 }
 
-export function CourseSidebarLessonItem({ lesson, slug }: CourseSidebarLessonItemProps) {
+export function CourseSidebarLessonItem({ lesson, slug, completed }: CourseSidebarLessonItemProps) {
     const pathname = usePathname();
     const isActive = pathname === `/dashboard/${slug}/${lesson.id}`;
-    const completed = false;
 
     return (
         <Link

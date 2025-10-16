@@ -1,9 +1,9 @@
-import { ChevronDown, PlayIcon } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { getCourseSidebarData } from '../../data/get-course-sidebar-data';
-import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Button } from '@/components/ui/button';
 import { CourseSidebarLessonItem } from './course-sidebar-lesson-item';
+import { CourseSidebarProgress } from './course-sidebar-progress';
 
 interface CourseSidebarProps {
     slug: string;
@@ -14,30 +14,7 @@ export async function CourseSidebar({ slug }: CourseSidebarProps) {
 
     return (
         <div className="flex flex-col h-full">
-            <div className="pb-4 pr-2 sm:pr-4 border-b border-border">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3">
-                    <div className="size-8 sm:size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                        <PlayIcon className="size-4 sm:size-5 text-primary" />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                        <h1 className="font-semibold text-sm sm:text-base leading-tight truncate">
-                            {course.title}
-                        </h1>
-                        <p className="text-xs text-muted-foreground truncate">{course.category}</p>
-                    </div>
-                </div>
-
-                <div className="space-y-2">
-                    <div className="flex justify-between text-xs">
-                        <span className="text-muted-foreground ">Progress</span>
-                        <span className="font-medium">0%</span>
-                    </div>
-
-                    <Progress value={55} className="h-1.5" />
-                    <p className="text-xs text-muted-foreground">55% completed</p>
-                </div>
-            </div>
+            <CourseSidebarProgress course={course} />
 
             <div className="py-4 pr-2 sm:pr-4 space-y-2 sm:space-y-3">
                 {course.chapters.map((chapter, index) => (
@@ -66,6 +43,11 @@ export async function CourseSidebar({ slug }: CourseSidebarProps) {
                                     key={lesson.id}
                                     lesson={lesson}
                                     slug={slug}
+                                    completed={
+                                        lesson.lessonProgresses?.find(
+                                            progress => progress.lessonId === lesson.id
+                                        )?.completed || false
+                                    }
                                 />
                             ))}
                         </CollapsibleContent>

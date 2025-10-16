@@ -1,3 +1,5 @@
+import { getEnrolledCourses } from '../data/get-enrolled-courses';
+
 export type EnrolledCoursesResponse = {
     course: {
         id: string;
@@ -12,7 +14,14 @@ export type EnrolledCoursesResponse = {
             id: string;
             lessons: {
                 id: string;
+                lessonProgresses: {
+                    id: string;
+                    completed: boolean;
+                    lessonId: string;
+                }[];
             }[];
         }[];
     };
 };
+
+export type EnrolledCourseType = Awaited<ReturnType<typeof getEnrolledCourses>>[0];

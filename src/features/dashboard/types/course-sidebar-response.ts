@@ -15,6 +15,11 @@ export type CourseSidebarData = {
             title: string;
             position: number;
             description: string | null;
+            lessonProgresses: {
+                id: string;
+                completed: boolean;
+                lessonId: string;
+            }[] | null;
         }[];
     }[];
 };
