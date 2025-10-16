@@ -29,6 +29,16 @@ export async function getEnrolledCourses(): Promise<EnrolledCoursesResponse[]> {
                             lessons: {
                                 select: {
                                     id: true,
+                                    lessonProgresses: {
+                                        where: {
+                                            userId: session.user.id,
+                                        },
+                                        select: {
+                                            id: true,
+                                            completed: true,
+                                            lessonId: true,
+                                        },
+                                    },
                                 },
                             },
                         },
