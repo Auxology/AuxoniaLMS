@@ -18,6 +18,7 @@ import { CheckIcon } from 'lucide-react';
 import { CourseEnrollmentButton } from '@/features/payment/components/course-enrollment-button';
 import { checkIfUserIsEnrolled } from '@/features/payment/data/user-is-enrolled';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export async function CourseIndividualSection({ slug }: { slug: string }) {
     const data = await getSpecificCourse(slug);
@@ -229,7 +230,9 @@ export async function CourseIndividualSection({ slug }: { slug: string }) {
                                     </div>
 
                                     {isEnrolled ? (
-                                        <Button>View Course</Button>
+                                        <Link href={`/dashboard/${slug}`}>
+                                            <Button variant="outline">View Course</Button>
+                                        </Link>
                                     ) : (
                                         <CourseEnrollmentButton courseId={data.id} />
                                     )}

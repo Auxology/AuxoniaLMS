@@ -31,7 +31,7 @@ export function HomeHeroSection() {
                 </div>
                 <Image
                     alt="App screenshot"
-                    src="https://tailwindui.com/plus-assets/img/component-images/dark-project-app-screenshot.png"
+                    src="/hero.png"
                     width={2432}
                     height={1442}
                     className="mt-16 rounded-md bg-foreground ring-1 shadow-2xl ring-border sm:mt-24"

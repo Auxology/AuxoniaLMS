@@ -69,9 +69,7 @@ export function CourseContent({ data }: CourseContentProps) {
 
             <div className="space-y-3 pt-3">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground">{data.title}</h1>
-                <p>
-                    {data.description && <LessonDescription json={JSON.parse(data.description)} />}
-                </p>
+                {data.description && <LessonDescription json={JSON.parse(data.description)} />}
             </div>
         </div>
     );
