@@ -57,6 +57,48 @@ src/
 └── hooks/        # Custom hooks
 ```
 
+## Live Demo
+
+You can explore the live version at [https://auxonia-lms.vercel.app/](https://auxonia-lms.vercel.app/)
+
+### How to Navigate
+
+**For Students:**
+
+- Browse available courses on the homepage
+- Sign up using GitHub (recommended) or email
+- Access your dashboard to track progress
+- Enroll in courses and track your learning journey
+
+**For Admins:**
+
+- Sign up with any email to get started
+- Access the admin panel at `/admin`
+- Create and manage courses, chapters, and lessons
+- View analytics and user progress
+
+### Important Limitations
+
+**Payment Testing:**
+
+- Stripe is configured for test mode only
+- Use test card numbers: `4242 4242 4242 4242`
+- No real payments will be processed
+- All transactions are simulated for demonstration
+
+**Email Verification:**
+
+- Email verification is disabled in the demo
+- GitHub sign-ups work immediately
+- Email sign-ups will work but verification emails won't be sent
+- This prevents spam and keeps the demo clean
+
+**Data Persistence:**
+
+- Demo data resets periodically
+- Your progress and courses may not persist long-term
+- This is normal for a demonstration environment
+
 ## Scripts
 
 - `bun dev` - Start development server
