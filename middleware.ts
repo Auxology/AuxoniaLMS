@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 import arcjet, { createMiddleware, detectBot } from '@arcjet/next';
-import { env } from '@/env';
 
 async function authMiddleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
@@ -14,7 +13,7 @@ async function authMiddleware(request: NextRequest) {
 }
 
 const aj = arcjet({
-    key: env.ARCJET_KEY,
+    key: process.env.ARCJET_KEY!,
 
     rules: [
         detectBot({
