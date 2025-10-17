@@ -1,5 +1,6 @@
 import { useConstructUrl } from '@/features/shared/hooks/use-construct';
 import { BookIcon } from 'lucide-react';
+import Image from 'next/image';
 
 interface LessonVideoPlayerProps {
     videoKey: string;
@@ -11,10 +12,23 @@ export function LessonVideoPlayer({ videoKey, thumbnailKey }: LessonVideoPlayerP
     const videoUrl = useConstructUrl(videoKey);
 
     if (!videoKey) {
-        <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-            <BookIcon className="size-16 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground">No video available</p>
-        </div>;
+        return (
+            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center relative overflow-hidden">
+                {thumbnailKey ? (
+                    <Image
+                        src={thumbnailUrl ?? ''}
+                        alt="Lesson thumbnail"
+                        fill
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="flex flex-col items-center justify-center">
+                        <BookIcon className="size-16 text-muted-foreground mb-4" />
+                        <p className="text-muted-foreground">No video available</p>
+                    </div>
+                )}
+            </div>
+        );
     }
 
     return (

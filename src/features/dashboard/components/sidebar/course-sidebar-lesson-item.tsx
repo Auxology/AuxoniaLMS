@@ -70,8 +70,11 @@ export function CourseSidebarLessonItem({ lesson, slug, completed }: CourseSideb
                     <p
                         className={cn(
                             'text-xs font-medium truncate',
-                            completed && 'text-green-800 dark:text-green-200',
-                            isActive ? 'text-primary font-semibold' : 'text-foreground'
+                            completed
+                                ? 'text-green-800 dark:text-green-200'
+                                : isActive
+                                  ? 'text-primary font-semibold'
+                                  : 'text-foreground'
                         )}
                     >
                         {lesson.position}. {lesson.title}

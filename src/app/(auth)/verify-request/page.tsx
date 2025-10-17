@@ -1,38 +1,38 @@
-'use client'
+'use client';
 
-import { useState, useTransition } from 'react'
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
-import { Button } from '@/components/ui/button'
-import { authClient } from '@/lib/auth-client'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { toast } from 'sonner'
-import { Loader } from 'lucide-react'
+import { useState, useTransition, Suspense } from 'react';
+import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth-client';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
+import { Loader } from 'lucide-react';
 
-export default function VerifyRequestPage() {
-    const router = useRouter()
-    const [otp, setOtp] = useState('')
-    const [otpPending, startOtpTransition] = useTransition()
-    const params = useSearchParams()
-    const email = params.get('email') as string
-    const otpIsFilled = otp.length === 6
+const VerifyRequestContent = () => {
+    const router = useRouter();
+    const [otp, setOtp] = useState('');
+    const [otpPending, startOtpTransition] = useTransition();
+    const params = useSearchParams();
+    const email = params.get('email') as string;
+    const otpIsFilled = otp.length === 6;
 
-    function verifyOtp() {
+    const handleVerifyOtp = () => {
         startOtpTransition(async () => {
             await authClient.signIn.emailOtp({
                 email: email,
                 otp: otp,
                 fetchOptions: {
                     onSuccess: () => {
-                        toast.success('Email Verified')
-                        router.push('/')
+                        toast.success('Email Verified');
+                        router.push('/');
                     },
                     onError: () => {
-                        toast.error('Invalid or Expired OTP, please try again.')
+                        toast.error('Invalid or Expired OTP, please try again.');
                     },
                 },
-            })
-        })
-    }
+            });
+        });
+    };
 
     return (
         <div className="min-h-svh w-full flex items-center justify-center p-6 md:p-10">
@@ -68,7 +68,7 @@ export default function VerifyRequestPage() {
                     <div className="mt-6">
                         <Button
                             className="w-full"
-                            onClick={verifyOtp}
+                            onClick={handleVerifyOtp}
                             disabled={otpPending || !otpIsFilled}
                         >
                             {otpPending ? (
@@ -84,5 +84,28 @@ export default function VerifyRequestPage() {
                 </div>
             </div>
         </div>
-    )
+    );
+};
+
+const LoadingFallback = () => (
+    <div className="min-h-svh w-full flex items-center justify-center p-6 md:p-10">
+        <div className="max-w-md w-full">
+            <div className="max-w-92 m-auto h-fit w-full">
+                <div className="p-6">
+                    <div>
+                        <h1 className="mb-1 mt-4 text-xl font-semibold">AuxoniaLMS</h1>
+                        <p>Loading verification page...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
+export default function VerifyRequestPage() {
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <VerifyRequestContent />
+        </Suspense>
+    );
 }
